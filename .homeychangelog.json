@@ -1,5 +1,8 @@
 {
   "1.0.1": {
     "en": "Interaction with ChatGPT"
+  },
+  "1.0.2": {
+    "en": "Moved API key from environment to settings as this is a paid service."
   }
 }
