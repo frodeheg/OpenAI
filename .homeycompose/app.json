@@ -1,0 +1,36 @@
+{
+  "id": "com.openai.ChatGPT",
+  "version": "1.0.1",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "OpenAI ChatGPT"
+  },
+  "description": {
+    "en": "Let you interact with the OpenAI ChatGPT through Homey flows"
+  },
+  "category": [
+    "internet"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Frode Heggelund",
+    "email": "frode.heggelund@gmail.com"
+  },
+  "tags": {
+    "en": [
+      "OpenAI",
+      "ChatGPT",
+      "text"
+    ]
+  },
+  "brandColor": "#050505"
+}

@@ -1,0 +1,72 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.openai.ChatGPT",
+  "version": "1.0.1",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "OpenAI ChatGPT"
+  },
+  "description": {
+    "en": "Let you interact with the OpenAI ChatGPT through Homey flows"
+  },
+  "category": [
+    "internet"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Frode Heggelund",
+    "email": "frode.heggelund@gmail.com"
+  },
+  "tags": {
+    "en": [
+      "OpenAI",
+      "ChatGPT",
+      "text"
+    ]
+  },
+  "brandColor": "#050505",
+  "flow": {
+    "actions": [
+      {
+        "title": {
+          "en": "Ask ChatGPT a question:"
+        },
+        "titleFormatted": {
+          "en": "Ask ChatGPT the question [[Question]]"
+        },
+        "hint": {
+          "en": "The question provided with this flow card will be sent to ChatGPT for processing."
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "Question",
+            "placeholder": {
+              "en": "question"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "ChatGPT_Response",
+            "type": "string",
+            "title": {
+              "en": "ChatGPT Response"
+            },
+            "example": "I can answer all your questions"
+          }
+        ],
+        "id": "ask-chatgpt-a-question"
+      }
+    ]
+  }
+}

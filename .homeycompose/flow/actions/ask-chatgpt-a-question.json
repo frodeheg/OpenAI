@@ -1,0 +1,28 @@
+{
+  "title": {
+    "en": "Ask ChatGPT a question:"
+  },
+  "titleFormatted": {
+    "en": "Ask ChatGPT the question [[Question]]"
+  },
+  "hint": {
+    "en": "The question provided with this flow card will be sent to ChatGPT for processing."
+  },
+  "args": [
+    {
+      "type": "text",
+      "name": "Question",
+      "placeholder": {
+        "en": "question"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "ChatGPT_Response",
+      "type": "string",
+      "title": { "en": "ChatGPT Response" },
+      "example": "I can answer all your questions"
+    }
+  ]
+}
