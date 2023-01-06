@@ -1,1 +1,13 @@
-{}
+{
+  "settings": {
+    "title": "Settings",
+    "subtitle": "OpenAI ChatGPT",
+    "api": "API",
+    "key": "API Key",
+    "keyHelp": "In order to communicate with OpenAI you need to<ul><li>Create an account on the OpenAI home page</li><li>Create an API key</li><li>Copy the API key to the field below</li></ul>This can be done by <a href='https://beta.openai.com/account/api-keys'>following this link</a>",
+    "prefix": "Question prefix",
+    "prefixHelp": "The question prefix is prefixed to all the generated questions. Please be aware that if you change this prefix the answers may violate the OpenAI policy and your account may be suspended.",
+    "defaultPrefix": "Please use moderation when answering: ",
+    "save": "Save changes"
+  }
+}

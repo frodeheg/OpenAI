@@ -6,7 +6,7 @@
     "en": "Ask ChatGPT the question [[Question]]"
   },
   "hint": {
-    "en": "Use this flowcard for advanced flows. The question provided with this flow card will be sent to ChatGPT for processing."
+    "en": "This flow card is for simple flows. The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered when the answer arrives."
   },
   "args": [
     {
@@ -16,14 +16,6 @@
       "placeholder": {
         "en": "question"
       }
-    }
-  ],
-  "tokens": [
-    {
-      "name": "ChatGPT_Response",
-      "type": "string",
-      "title": { "en": "ChatGPT Response" },
-      "example": "I can answer all your questions"
     }
   ]
 }

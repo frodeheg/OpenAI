@@ -38,7 +38,7 @@
     "actions": [
       {
         "title": {
-          "en": "Ask ChatGPT a question:"
+          "en": "Ask ChatGPT a question"
         },
         "titleFormatted": {
           "en": "Ask ChatGPT the question [[Question]]"
@@ -50,6 +50,9 @@
           {
             "type": "text",
             "name": "Question",
+            "title": {
+              "en": "Question to ask ChatGPT"
+            },
             "placeholder": {
               "en": "question"
             }
