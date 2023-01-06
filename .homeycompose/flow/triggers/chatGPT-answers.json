@@ -1,0 +1,19 @@
+{
+  "title": {
+    "en": "When ChatGPT answers a question"
+  },
+  "titleFormatted": {
+    "en": "ChatGPT answered a question"
+  },
+  "hint": {
+    "en": "When a question has been answered by ChatGPT this card will be triggered."
+  },
+  "tokens": [
+    {
+      "name": "ChatGPT_Response",
+      "type": "string",
+      "title": { "en": "ChatGPT Response" },
+      "example": "I can answer all your questions"
+    }
+  ]
+}

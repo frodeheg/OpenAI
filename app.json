@@ -35,21 +35,48 @@
   },
   "brandColor": "#050505",
   "flow": {
+    "triggers": [
+      {
+        "title": {
+          "en": "When ChatGPT answers a question"
+        },
+        "titleFormatted": {
+          "en": "ChatGPT answered a question"
+        },
+        "hint": {
+          "en": "When a question has been answered by ChatGPT this card will be triggered."
+        },
+        "tokens": [
+          {
+            "name": "ChatGPT_Response",
+            "type": "string",
+            "title": {
+              "en": "ChatGPT Response"
+            },
+            "example": "I can answer all your questions"
+          }
+        ],
+        "id": "chatGPT-answers"
+      }
+    ],
     "actions": [
       {
         "title": {
-          "en": "Ask ChatGPT a question:"
+          "en": "Ask ChatGPT a question"
         },
         "titleFormatted": {
           "en": "Ask ChatGPT the question [[Question]]"
         },
         "hint": {
-          "en": "The question provided with this flow card will be sent to ChatGPT for processing."
+          "en": "Use this flowcard for advanced flows. The question provided with this flow card will be sent to ChatGPT for processing."
         },
         "args": [
           {
             "type": "text",
             "name": "Question",
+            "title": {
+              "en": "Question to ask ChatGPT"
+            },
             "placeholder": {
               "en": "question"
             }
@@ -66,6 +93,30 @@
           }
         ],
         "id": "ask-chatgpt-a-question"
+      },
+      {
+        "title": {
+          "en": "Ask ChatGPT a question"
+        },
+        "titleFormatted": {
+          "en": "Ask ChatGPT the question [[Question]]"
+        },
+        "hint": {
+          "en": "This flow card is for simple flows. The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered when the answer arrives."
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "Question",
+            "title": {
+              "en": "Question to ask ChatGPT"
+            },
+            "placeholder": {
+              "en": "question"
+            }
+          }
+        ],
+        "id": "ask-chatgpt-a-question-simple"
       }
     ]
   }
