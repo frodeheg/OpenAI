@@ -4,5 +4,8 @@
   },
   "1.0.2": {
     "en": "Moved API key from environment to settings as this is a paid service."
+  },
+  "1.0.3": {
+    "en": "Translation into Norwegian"
   }
 }
