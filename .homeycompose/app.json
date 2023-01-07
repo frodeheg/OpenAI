@@ -32,5 +32,6 @@
       "text"
     ]
   },
-  "brandColor": "#050505"
+  "brandColor": "#050505",
+  "source": "https://github.com/frodeheg/OpenAI"
 }

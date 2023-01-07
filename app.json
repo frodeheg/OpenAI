@@ -34,6 +34,7 @@
     ]
   },
   "brandColor": "#050505",
+  "source": "https://github.com/frodeheg/OpenAI",
   "flow": {
     "triggers": [
       {
