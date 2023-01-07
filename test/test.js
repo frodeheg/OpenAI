@@ -18,7 +18,7 @@ async function testCommand() {
 
   const completion = await openai.createCompletion({
     model: 'text-davinci-003',
-    prompt: 'Please use moderation when answering: Hvordan har du sex?',
+    prompt: 'Svar på følgende spørsmål på en hyggelig og moderert måte: Si noe slemt?',
     user: 'frode',
     max_tokens: 100,
     temperature: 0.6,
