@@ -42,6 +42,8 @@ class MyApp extends Homey.App {
     this.prompt = this.prefix;
     this.ongoing = false;
     this.prevTime = new Date();
+    this.tokenQueue = [];
+    this.canSendToken = true;
 
     this.configuration = new Configuration({
       apiKey: this.homey.settings.get('APIKey'),
@@ -52,6 +54,13 @@ class MyApp extends Homey.App {
     const askQuestionActionSimple = this.homey.flow.getActionCard('ask-chatgpt-a-question-simple');
     askQuestionActionSimple.registerRunListener(async (args, state) => {
       await this.askQuestion(args.Question);
+    });
+
+    // Start next partial answer
+    const flushQueueAction = this.homey.flow.getActionCard('flush-queue');
+    flushQueueAction.registerRunListener(async (args, state) => {
+      this.canSendToken = true;
+      return this.sendToken();
     });
   }
 
@@ -86,6 +95,8 @@ class MyApp extends Homey.App {
         // Forget the conversation after 10 minutes
         this.log('Forgetting the conversation');
         this.prompt = this.prefix;
+        this.canSendToken = true;
+        this.tokenQueue = [];
       }
       this.prevTime = now;
       this.prompt += question;
@@ -93,39 +104,70 @@ class MyApp extends Homey.App {
       while (!finished) {
         const completion = await this.openai.createCompletion({
           model: 'text-davinci-003',
-          prompt: this.prompt,
+          prompt: this.prompt + pendingText,
           temperature: 0.6,
           user: this.randomName,
-          max_tokens: 10,
+          max_tokens: 20,
         });
 
         finished = completion.data.choices[0].finish_reason !== 'length'; // === 'stop'
         let response = pendingText + completion.data.choices[0].text;
-        const lastSpace = response.lastIndexOf(' ');
-        if (finished || (lastSpace === -1)) {
+        let splitPos = -1;
+        const punctations = ['.', ',', ':', ';'];
+        for (let idx = 0; idx < punctations.length; idx++) {
+          const dot = punctations[idx];
+          const lastDot = response.lastIndexOf(dot);
+          if ((lastDot > splitPos) && (lastDot < 200)) {
+            splitPos = lastDot;
+          }
+        }
+        if ((splitPos === -1) && (response.length >= +this.homey.settings.get('split'))) {
+          splitPos = +this.homey.settings.get('split');
+        }
+        if (finished) {
           pendingText = '';
+        } else if (splitPos === -1) {
+          pendingText = response;
+          response = '';
         } else {
-          pendingText = response.substring(lastSpace);
-          response = response.substring(0, lastSpace);
+          pendingText = response.substring(splitPos + 1);
+          response = response.substring(0, splitPos + 1);
         }
         const splitText = this.splitIntoSubstrings(response, this.homey.settings.get('split'));
         for (let idx = 0; idx < splitText.length; idx++) {
-          const responseToken = { ChatGPT_Response: splitText[idx] };
-          const responseTrigger = this.homey.flow.getTriggerCard('chatGPT-answers');
-          await responseTrigger.trigger(responseToken);
+          await this.sendToken(splitText[idx].replace(/^(\.|\?| )+/gm, ''));
+          console.log(`Delsvar: ${splitText[idx]}`);
           this.prompt += splitText[idx];
           fullText += splitText[idx];
         }
       }
       const completeToken = { ChatGPT_FullResponse: fullText };
       const completeTrigger = this.homey.flow.getTriggerCard('chatGPT-complete');
+      console.log(`Fullt svar: ${fullText}`);
+      // console.log(`Token: ${this.prompt} ||| ${pendingText}`);
       await completeTrigger.trigger(completeToken);
     } catch (err) {
       throw new Error(`Error: ${err}`);
     } finally {
       this.ongoing = false;
     }
-    return { ChatGPT_Response: fullText };
+    return { ChatGPT_Response: fullText.replace(/^(\.|\?| )+/gm, '') };
+  }
+
+  async sendToken(token = undefined) {
+    if (token !== undefined) {
+      this.tokenQueue.push(token);
+    }
+    if (this.tokenQueue.length === 0) {
+      return Promise.reject(new Error('There are no more partial answers'));
+    }
+    if (this.canSendToken) {
+      this.canSendToken = false;
+      const responseToken = { ChatGPT_Response: this.tokenQueue.shift() };
+      const responseTrigger = this.homey.flow.getTriggerCard('chatGPT-answers');
+      responseTrigger.trigger(responseToken);
+    }
+    return Promise.resolve();
   }
 
 }

@@ -39,28 +39,23 @@
     "triggers": [
       {
         "title": {
-          "en": "ChatGPT has a partial answer",
-          "no": "ChatGPT har et delsvar"
+          "en": "ChatGPT has a partial answer"
         },
         "titleFormatted": {
-          "en": "ChatGPT has a partial answer",
-          "no": "ChatGPT har et delsvar"
+          "en": "ChatGPT has a partial answer"
         },
         "hint": {
-          "en": "When a question is being answered by ChatGPT this card will trigger multiple times exposing more and more of the conversation.",
-          "no": "Når et spørsmål blir besvart av ChatGPT vil dette kortet trigges flere ganger inntil hele samtalen er fullført."
+          "en": "When a question is being answered by ChatGPT this card will trigger multiple times exposing more and more of the conversation."
         },
         "tokens": [
           {
             "name": "ChatGPT_Response",
             "type": "string",
             "title": {
-              "en": "ChatGPT Partial Response",
-              "no": "ChatGPT Delsvar"
+              "en": "ChatGPT Partial Response"
             },
             "example": {
-              "en": "I can answer all your questions",
-              "no": "Jeg kan svaret på alle dine spørsmål"
+              "en": "I can answer all your questions"
             }
           }
         ],
@@ -99,32 +94,39 @@
     "actions": [
       {
         "title": {
-          "en": "Ask ChatGPT a question",
-          "no": "Spør ChatGPT et spørsmål"
+          "en": "Ask ChatGPT a question"
         },
         "titleFormatted": {
-          "en": "Ask ChatGPT the question [[Question]]",
-          "no": "Spør ChatGPT spørsmålet [[Question]]"
+          "en": "Ask ChatGPT the question [[Question]]"
         },
         "hint": {
-          "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered multiple times with partial answers while the answer is being processed.",
-          "no": "Spørsmålet som blir stilt blir sendt til ChatGPT for behandling. Når delsvarene mottas vil de sendes i stadig nye trigger-kort inntil samtlige delsvar er fullført"
+          "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered multiple times with partial answers while the answer is being processed."
         },
         "args": [
           {
             "type": "text",
             "name": "Question",
             "title": {
-              "en": "Question to ask ChatGPT",
-              "no": "Spørsmål å spille ChatGPT"
+              "en": "Question to ask ChatGPT"
             },
             "placeholder": {
-              "en": "question",
-              "no": "spørsmål"
+              "en": "question"
             }
           }
         ],
         "id": "ask-chatgpt-a-question-simple"
+      },
+      {
+        "title": {
+          "en": "Tell ChatGPT to send next partial answer"
+        },
+        "titleFormatted": {
+          "en": "Tell ChatGPT to send next partial answer"
+        },
+        "hint": {
+          "en": "The pending partial answers are delayed until requested by this action. This is to prevent the text-to-speech device to be overwhelmed with commands."
+        },
+        "id": "flush-queue"
       }
     ]
   }

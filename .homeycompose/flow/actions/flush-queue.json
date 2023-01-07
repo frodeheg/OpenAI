@@ -1,0 +1,14 @@
+{
+  "title": {
+    "en": "Tell ChatGPT to send next partial answer",
+    "no": "Be ChatGPT om å sende neste delsvar"
+  },
+  "titleFormatted": {
+    "en": "Tell ChatGPT to send next partial answer",
+    "no": "Be ChatGPT om å sende neste delsvar"
+  },
+  "hint": {
+    "en": "The pending partial answers are delayed until requested by this action. This is to prevent the text-to-speech device to be overwhelmed with commands.",
+    "no": "De ventende delsvarene blir forsinket til de blir etterspurt av denne handlingen. Dette er for å forhindre at tekst-til-tale-enheten blir overlesset med kommandoer."
+  }
+}
