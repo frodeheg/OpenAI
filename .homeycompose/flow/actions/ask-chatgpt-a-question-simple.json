@@ -1,20 +1,27 @@
 {
   "title": {
-    "en": "Ask ChatGPT a question"
+    "en": "Ask ChatGPT a question using basic flows",
+    "no": "Spør ChatGPT et spørsmål ved hjelp av en enkel flow"
   },
   "titleFormatted": {
-    "en": "Ask ChatGPT the question [[Question]]"
+    "en": "Ask ChatGPT the question [[Question]] using basic flows",
+    "no": "Spør ChatGPT spørsmålet [[Question]] ved hjelp av en enkel flow"
   },
   "hint": {
-    "en": "This flow card is for simple flows. The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered when the answer arrives."
+    "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered when the answer arrives.",
+    "no": "Spørsmålet som blir stilt blir sendt til ChatGPT for behandling. Når svaret mottas vil det sendes i et trigger-kort"
   },
   "args": [
     {
       "type": "text",
       "name": "Question",
-      "title": { "en": "Question to ask ChatGPT" },
+      "title": {
+        "en": "Question to ask ChatGPT",
+        "no": "Spørsmål å spille ChatGPT"
+      },
       "placeholder": {
-        "en": "question"
+        "en": "question",
+        "no": "spørsmål"
       }
     }
   ]

@@ -1,20 +1,27 @@
 {
   "title": {
-    "en": "Ask ChatGPT a question"
+    "en": "Ask ChatGPT a question using advanced flows",
+    "no": "Spør ChatGPT et spørsmål ved hjelp av en avansert flow"
   },
   "titleFormatted": {
-    "en": "Ask ChatGPT the question [[Question]]"
+    "en": "Ask ChatGPT the question [[Question]] using advanced flows",
+    "no": "Spør ChatGPT spørsmålet [[Question]] ved hjelp av en avansert flow"
   },
   "hint": {
-    "en": "Use this flowcard for advanced flows. The question provided with this flow card will be sent to ChatGPT for processing."
+    "en": "The question provided with this flow card will be sent to ChatGPT for processing. The answer is returned in the flow token '#ChatGPT Response'",
+    "no": "Spørsmålet som blir stilt blir sendt til ChatGPT for behandling. Når svaret mottas vil det bli returnert i en flow token '#ChatGPT Svar'"
   },
   "args": [
     {
       "type": "text",
       "name": "Question",
-      "title": { "en": "Question to ask ChatGPT" },
+      "title": {
+        "en": "Question to ask ChatGPT",
+        "no": "Spørsmål å spille ChatGPT"
+      },
       "placeholder": {
-        "en": "question"
+        "en": "question",
+        "no": "spørsmål"
       }
     }
   ],
@@ -22,8 +29,14 @@
     {
       "name": "ChatGPT_Response",
       "type": "string",
-      "title": { "en": "ChatGPT Response" },
-      "example": "I can answer all your questions"
+      "title": {
+        "en": "ChatGPT Response",
+        "no": "ChatGPT Svar"
+      },
+      "example": {
+        "en": "I can answer all your questions",
+        "no": "Jeg kan svaret på alle dine spørsmål"
+      }
     }
   ]
 }

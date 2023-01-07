@@ -38,22 +38,29 @@
     "triggers": [
       {
         "title": {
-          "en": "When ChatGPT answers a question"
+          "en": "When ChatGPT answers a question",
+          "no": "Når ChatGPT svarer på et spørsmål"
         },
         "titleFormatted": {
-          "en": "ChatGPT answered a question"
+          "en": "ChatGPT answered a question",
+          "no": "ChatGPT svarte på et spørsmål"
         },
         "hint": {
-          "en": "When a question has been answered by ChatGPT this card will be triggered."
+          "en": "When a question has been answered by ChatGPT this card will be triggered.",
+          "no": "Når et spørsmål har blitt besvart av ChatGPT vil dette kortet trigges"
         },
         "tokens": [
           {
             "name": "ChatGPT_Response",
             "type": "string",
             "title": {
-              "en": "ChatGPT Response"
+              "en": "ChatGPT Response",
+              "no": "ChatGPT Svar"
             },
-            "example": "I can answer all your questions"
+            "example": {
+              "en": "I can answer all your questions",
+              "no": "Jeg kan svaret på alle dine spørsmål"
+            }
           }
         ],
         "id": "chatGPT-answers"
@@ -62,23 +69,28 @@
     "actions": [
       {
         "title": {
-          "en": "Ask ChatGPT a question"
+          "en": "Ask ChatGPT a question using advanced flows",
+          "no": "Spør ChatGPT et spørsmål ved hjelp av en avansert flow"
         },
         "titleFormatted": {
-          "en": "Ask ChatGPT the question [[Question]]"
+          "en": "Ask ChatGPT the question [[Question]] using advanced flows",
+          "no": "Spør ChatGPT spørsmålet [[Question]] ved hjelp av en avansert flow"
         },
         "hint": {
-          "en": "Use this flowcard for advanced flows. The question provided with this flow card will be sent to ChatGPT for processing."
+          "en": "The question provided with this flow card will be sent to ChatGPT for processing. The answer is returned in the flow token '#ChatGPT Response'",
+          "no": "Spørsmålet som blir stilt blir sendt til ChatGPT for behandling. Når svaret mottas vil det bli returnert i en flow token '#ChatGPT Svar'"
         },
         "args": [
           {
             "type": "text",
             "name": "Question",
             "title": {
-              "en": "Question to ask ChatGPT"
+              "en": "Question to ask ChatGPT",
+              "no": "Spørsmål å spille ChatGPT"
             },
             "placeholder": {
-              "en": "question"
+              "en": "question",
+              "no": "spørsmål"
             }
           }
         ],
@@ -87,32 +99,41 @@
             "name": "ChatGPT_Response",
             "type": "string",
             "title": {
-              "en": "ChatGPT Response"
+              "en": "ChatGPT Response",
+              "no": "ChatGPT Svar"
             },
-            "example": "I can answer all your questions"
+            "example": {
+              "en": "I can answer all your questions",
+              "no": "Jeg kan svaret på alle dine spørsmål"
+            }
           }
         ],
         "id": "ask-chatgpt-a-question"
       },
       {
         "title": {
-          "en": "Ask ChatGPT a question"
+          "en": "Ask ChatGPT a question using basic flows",
+          "no": "Spør ChatGPT et spørsmål ved hjelp av en enkel flow"
         },
         "titleFormatted": {
-          "en": "Ask ChatGPT the question [[Question]]"
+          "en": "Ask ChatGPT the question [[Question]] using basic flows",
+          "no": "Spør ChatGPT spørsmålet [[Question]] ved hjelp av en enkel flow"
         },
         "hint": {
-          "en": "This flow card is for simple flows. The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered when the answer arrives."
+          "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered when the answer arrives.",
+          "no": "Spørsmålet som blir stilt blir sendt til ChatGPT for behandling. Når svaret mottas vil det sendes i et trigger-kort"
         },
         "args": [
           {
             "type": "text",
             "name": "Question",
             "title": {
-              "en": "Question to ask ChatGPT"
+              "en": "Question to ask ChatGPT",
+              "no": "Spørsmål å spille ChatGPT"
             },
             "placeholder": {
-              "en": "question"
+              "en": "question",
+              "no": "spørsmål"
             }
           }
         ],

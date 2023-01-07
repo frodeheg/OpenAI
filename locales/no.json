@@ -1,0 +1,13 @@
+{
+    "settings": {
+      "title": "Innstillinger",
+      "subtitle": "OpenAI ChatGPT",
+      "api": "API",
+      "key": "API Nøkkel",
+      "keyHelp": "For å kommunisere med OpenAI må du<ul><li>Opprette en konto på OpenAI-hjemmesiden</li><li>Opprette en API-nøkkel</li><li>Kopiere API-nøkkelen til feltet nedenfor< /li></ul>Dette kan gjøres ved å <a href='https://beta.openai.com/account/api-keys'>følge denne linken</a>",
+      "prefix": "Spørsmålsprefix",
+      "prefixHelp": "Spørsmålsprefikset settes foran alle de genererte spørsmålene. Vær oppmerksom på at hvis du endrer dette prefikset, kan svarene bryte med OpenAI-retningslinjene og kontoen din kan bli suspendert.",
+      "defaultPrefix": "Vennligst bruk moderasjon på svaret: ",
+      "save": "Lagre endringer"
+    }
+  }
