@@ -13,5 +13,8 @@
   },
   "1.0.5": {
     "en": "Updated images and fixed all delays so the flow in the image will playback just perfectly."
+  },
+  "1.0.6": {
+    "en": "Added the new images once more"
   }
 }
