@@ -1,0 +1,28 @@
+{
+  "title": {
+    "en": "ChatGPT has finished answering",
+    "no": "ChatGPT har fullført svaret"
+  },
+  "titleFormatted": {
+    "en": "ChatGPT has finished answering",
+    "no": "ChatGPT har fullført svaret"
+  },
+  "hint": {
+    "en": "This card will only trigger when all the partial answers have been received. This could take some time if you ask for something like a fairytale.\n\nWarning: The response string may be too long to be accepted by a text-to-voice assistant.",
+    "no": "Dette kortet vil først utløses når alle delsvarene er mottatt. Dette kan ta litt tid hvis du ber om noe som et eventyr.\n\nAdvarsel: Respons-teksten kan være for lang til å bli akseptert av tekst-til-tale assistenter."
+  },
+  "tokens": [
+    {
+      "name": "ChatGPT_FullResponse",
+      "type": "string",
+      "title": {
+        "en": "ChatGPT Full Response",
+        "no": "ChatGPT Fullt svar"
+      },
+      "example": {
+        "en": "I can answer all your questions",
+        "no": "Jeg kan svaret på alle dine spørsmål"
+      }
+    }
+  ]
+}

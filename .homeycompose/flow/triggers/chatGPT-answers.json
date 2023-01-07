@@ -1,23 +1,23 @@
 {
   "title": {
-    "en": "When ChatGPT answers a question",
-    "no": "Når ChatGPT svarer på et spørsmål"
+    "en": "ChatGPT has a partial answer",
+    "no": "ChatGPT har et delsvar"
   },
   "titleFormatted": {
-    "en": "ChatGPT answered a question",
-    "no": "ChatGPT svarte på et spørsmål"
+    "en": "ChatGPT has a partial answer",
+    "no": "ChatGPT har et delsvar"
   },
   "hint": {
-    "en": "When a question has been answered by ChatGPT this card will be triggered.",
-    "no": "Når et spørsmål har blitt besvart av ChatGPT vil dette kortet trigges"
+    "en": "When a question is being answered by ChatGPT this card will trigger multiple times exposing more and more of the conversation.",
+    "no": "Når et spørsmål blir besvart av ChatGPT vil dette kortet trigges flere ganger inntil hele samtalen er fullført."
   },
   "tokens": [
     {
       "name": "ChatGPT_Response",
       "type": "string",
       "title": {
-        "en": "ChatGPT Response",
-        "no": "ChatGPT Svar"
+        "en": "ChatGPT Partial Response",
+        "no": "ChatGPT Delsvar"
       },
       "example": {
         "en": "I can answer all your questions",

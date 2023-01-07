@@ -34,6 +34,13 @@
         <label class="homey-form-label" for="prefix" data-i18n="settings.prefix">prefix</label>
         <input class="homey-form-input" id="prefix" type="text" value="" />
       </div>
+
+      <p data-i18n="settings.splitHelp"></p>
+
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="split" data-i18n="settings.split">split</label>
+        <input class="homey-form-input" id="split" type="number" value="" />
+      </div>
     </fieldset>
 
     <button id="save" class="homey-button-primary-full" data-i18n="settings.save">Save changes</button>
@@ -46,6 +53,7 @@
         
         var APIKeyElement = document.getElementById("APIKey");
         var prefixElement = document.getElementById("prefix");
+        var splitElement = document.getElementById("split");
         var saveElement = document.getElementById("save");
 
         Homey.get("APIKey", function (err, APIKey) {
@@ -58,11 +66,19 @@
           prefixElement.value = prefix;
         });
 
+        Homey.get("split", function (err, split) {
+          if (err) return Homey.alert(err);
+          splitElement.value = split;
+        });
+
         saveElement.addEventListener("click", function (e) {
           Homey.set("APIKey", APIKeyElement.value, function (err) {
             if (err) return Homey.alert(err);
           });
           Homey.set("prefix", prefixElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          Homey.set("split", splitElement.value, function (err) {
             if (err) return Homey.alert(err);
           });
         });

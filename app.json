@@ -39,24 +39,24 @@
     "triggers": [
       {
         "title": {
-          "en": "When ChatGPT answers a question",
-          "no": "Når ChatGPT svarer på et spørsmål"
+          "en": "ChatGPT has a partial answer",
+          "no": "ChatGPT har et delsvar"
         },
         "titleFormatted": {
-          "en": "ChatGPT answered a question",
-          "no": "ChatGPT svarte på et spørsmål"
+          "en": "ChatGPT has a partial answer",
+          "no": "ChatGPT har et delsvar"
         },
         "hint": {
-          "en": "When a question has been answered by ChatGPT this card will be triggered.",
-          "no": "Når et spørsmål har blitt besvart av ChatGPT vil dette kortet trigges"
+          "en": "When a question is being answered by ChatGPT this card will trigger multiple times exposing more and more of the conversation.",
+          "no": "Når et spørsmål blir besvart av ChatGPT vil dette kortet trigges flere ganger inntil hele samtalen er fullført."
         },
         "tokens": [
           {
             "name": "ChatGPT_Response",
             "type": "string",
             "title": {
-              "en": "ChatGPT Response",
-              "no": "ChatGPT Svar"
+              "en": "ChatGPT Partial Response",
+              "no": "ChatGPT Delsvar"
             },
             "example": {
               "en": "I can answer all your questions",
@@ -65,43 +65,27 @@
           }
         ],
         "id": "chatGPT-answers"
-      }
-    ],
-    "actions": [
+      },
       {
         "title": {
-          "en": "Ask ChatGPT a question using advanced flows",
-          "no": "Spør ChatGPT et spørsmål ved hjelp av en avansert flow"
+          "en": "ChatGPT has finished answering",
+          "no": "ChatGPT har fullført svaret"
         },
         "titleFormatted": {
-          "en": "Ask ChatGPT the question [[Question]] using advanced flows",
-          "no": "Spør ChatGPT spørsmålet [[Question]] ved hjelp av en avansert flow"
+          "en": "ChatGPT has finished answering",
+          "no": "ChatGPT har fullført svaret"
         },
         "hint": {
-          "en": "The question provided with this flow card will be sent to ChatGPT for processing. The answer is returned in the flow token '#ChatGPT Response'",
-          "no": "Spørsmålet som blir stilt blir sendt til ChatGPT for behandling. Når svaret mottas vil det bli returnert i en flow token '#ChatGPT Svar'"
+          "en": "This card will only trigger when all the partial answers have been received. This could take some time if you ask for something like a fairytale.\n\nWarning: The response string may be too long to be accepted by a text-to-voice assistant.",
+          "no": "Dette kortet vil først utløses når alle delsvarene er mottatt. Dette kan ta litt tid hvis du ber om noe som et eventyr.\n\nAdvarsel: Respons-teksten kan være for lang til å bli akseptert av tekst-til-tale assistenter."
         },
-        "args": [
-          {
-            "type": "text",
-            "name": "Question",
-            "title": {
-              "en": "Question to ask ChatGPT",
-              "no": "Spørsmål å spille ChatGPT"
-            },
-            "placeholder": {
-              "en": "question",
-              "no": "spørsmål"
-            }
-          }
-        ],
         "tokens": [
           {
-            "name": "ChatGPT_Response",
+            "name": "ChatGPT_FullResponse",
             "type": "string",
             "title": {
-              "en": "ChatGPT Response",
-              "no": "ChatGPT Svar"
+              "en": "ChatGPT Full Response",
+              "no": "ChatGPT Fullt svar"
             },
             "example": {
               "en": "I can answer all your questions",
@@ -109,20 +93,22 @@
             }
           }
         ],
-        "id": "ask-chatgpt-a-question"
-      },
+        "id": "chatGPT-complete"
+      }
+    ],
+    "actions": [
       {
         "title": {
-          "en": "Ask ChatGPT a question using basic flows",
-          "no": "Spør ChatGPT et spørsmål ved hjelp av en enkel flow"
+          "en": "Ask ChatGPT a question",
+          "no": "Spør ChatGPT et spørsmål"
         },
         "titleFormatted": {
-          "en": "Ask ChatGPT the question [[Question]] using basic flows",
-          "no": "Spør ChatGPT spørsmålet [[Question]] ved hjelp av en enkel flow"
+          "en": "Ask ChatGPT the question [[Question]]",
+          "no": "Spør ChatGPT spørsmålet [[Question]]"
         },
         "hint": {
-          "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered when the answer arrives.",
-          "no": "Spørsmålet som blir stilt blir sendt til ChatGPT for behandling. Når svaret mottas vil det sendes i et trigger-kort"
+          "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered multiple times with partial answers while the answer is being processed.",
+          "no": "Spørsmålet som blir stilt blir sendt til ChatGPT for behandling. Når delsvarene mottas vil de sendes i stadig nye trigger-kort inntil samtlige delsvar er fullført"
         },
         "args": [
           {
