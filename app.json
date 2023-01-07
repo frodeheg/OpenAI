@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.openai.ChatGPT",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -39,23 +39,28 @@
     "triggers": [
       {
         "title": {
-          "en": "ChatGPT has a partial answer"
+          "en": "ChatGPT has a partial answer",
+          "no": "ChatGPT har et delsvar"
         },
         "titleFormatted": {
-          "en": "ChatGPT has a partial answer"
+          "en": "ChatGPT has a partial answer",
+          "no": "ChatGPT har et delsvar"
         },
         "hint": {
-          "en": "When a question is being answered by ChatGPT this card will trigger multiple times exposing more and more of the conversation."
+          "en": "When a question is being answered by ChatGPT this card will trigger multiple times exposing more and more of the conversation.",
+          "no": "Når et spørsmål blir besvart av ChatGPT vil dette kortet trigges flere ganger inntil hele samtalen er fullført."
         },
         "tokens": [
           {
             "name": "ChatGPT_Response",
             "type": "string",
             "title": {
-              "en": "ChatGPT Partial Response"
+              "en": "ChatGPT Partial Response",
+              "no": "ChatGPT Delsvar"
             },
             "example": {
-              "en": "I can answer all your questions"
+              "en": "I can answer all your questions",
+              "no": "Jeg kan svaret på alle dine spørsmål"
             }
           }
         ],
@@ -94,23 +99,28 @@
     "actions": [
       {
         "title": {
-          "en": "Ask ChatGPT a question"
+          "en": "Ask ChatGPT a question",
+          "no": "Spør ChatGPT et spørsmål"
         },
         "titleFormatted": {
-          "en": "Ask ChatGPT the question [[Question]]"
+          "en": "Ask ChatGPT the question [[Question]]",
+          "no": "Spør ChatGPT spørsmålet [[Question]]"
         },
         "hint": {
-          "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered multiple times with partial answers while the answer is being processed."
+          "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered multiple times with partial answers while the answer is being processed.",
+          "no": "Spørsmålet som blir stilt blir sendt til ChatGPT for behandling. Når delsvarene mottas vil de sendes i stadig nye trigger-kort inntil samtlige delsvar er fullført."
         },
         "args": [
           {
             "type": "text",
             "name": "Question",
             "title": {
-              "en": "Question to ask ChatGPT"
+              "en": "Question to ask ChatGPT",
+              "no": "Spørsmål å spille ChatGPT"
             },
             "placeholder": {
-              "en": "question"
+              "en": "question",
+              "no": "spørsmål"
             }
           }
         ],
@@ -118,13 +128,16 @@
       },
       {
         "title": {
-          "en": "Tell ChatGPT to send next partial answer"
+          "en": "Tell ChatGPT to send next partial answer",
+          "no": "Be ChatGPT om å sende neste delsvar"
         },
         "titleFormatted": {
-          "en": "Tell ChatGPT to send next partial answer"
+          "en": "Tell ChatGPT to send next partial answer",
+          "no": "Be ChatGPT om å sende neste delsvar"
         },
         "hint": {
-          "en": "The pending partial answers are delayed until requested by this action. This is to prevent the text-to-speech device to be overwhelmed with commands."
+          "en": "The pending partial answers are delayed until requested by this action. This is to prevent the text-to-speech device to be overwhelmed with commands.",
+          "no": "De ventende delsvarene blir forsinket til de blir etterspurt av denne handlingen. Dette er for å forhindre at tekst-til-tale-enheten blir overlesset med kommandoer."
         },
         "id": "flush-queue"
       }

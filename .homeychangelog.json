@@ -10,5 +10,8 @@
   },
   "1.0.4": {
     "en": "Added link to source code"
+  },
+  "1.0.5": {
+    "en": "Updated images and fixed all delays so the flow in the image will playback just perfectly."
   }
 }
