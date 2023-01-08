@@ -42,6 +42,7 @@
   },
   "brandColor": "#050505",
   "source": "https://github.com/frodeheg/OpenAI",
+  "homeyCommunityTopicId": 74750,
   "flow": {
     "triggers": [
       {
@@ -54,8 +55,8 @@
           "no": "ChatGPT har et delsvar"
         },
         "hint": {
-          "en": "When a question is being answered by ChatGPT this card will trigger multiple times exposing more and more of the conversation.",
-          "no": "Når et spørsmål blir besvart av ChatGPT vil dette kortet trigges flere ganger inntil hele samtalen er fullført."
+          "en": "When ChatGPT is answering a question the first partial answer will trigger this card. The proceeding partial answers will be delayed until the flow action 'Tell ChatGPT to send next partial answer' is called. This is to ensure that the text-to-speech engine has time to finish processing a partial answer before a new one arrives.",
+          "no": "Når ChatGPT svarer på et spørsmål, vil det første delsvaret utløse dette kortet. De videre delsvarene vil bli forsinket til flythandlingen 'Be ChatGPT om å sende neste delsvar' kalles. Dette er for å sikre at tekst-til-tale-motoren rekker å fullføre behandlingen av et delsvar før et nytt kommer."
         },
         "tokens": [
           {
