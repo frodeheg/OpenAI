@@ -19,5 +19,8 @@
   },
   "1.0.7": {
     "en": "Added github sponsor link"
+  },
+  "1.0.8": {
+    "en": "Improved help text in flows + added community forum ID"
   }
 }
