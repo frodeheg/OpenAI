@@ -90,6 +90,11 @@ class MyApp extends Homey.App {
     let fullText = '';
     let pendingText = '';
     try {
+      if (!(question.endsWith('.')
+        || question.endsWith('?')
+        || question.endsWith('!'))) {
+        question += '.';
+      }
       const now = new Date();
       if (now - this.prevTime > (1000 * 60 * 10)) {
         // Forget the conversation after 10 minutes
@@ -147,7 +152,12 @@ class MyApp extends Homey.App {
       // console.log(`Token: ${this.prompt} ||| ${pendingText}`);
       await completeTrigger.trigger(completeToken);
     } catch (err) {
-      throw new Error(`Error: ${err}`);
+      const errText = `Error: ${err}`;
+      await this.sendToken(errText);
+      const completeToken = { ChatGPT_FullResponse: errText };
+      const completeTrigger = this.homey.flow.getTriggerCard('chatGPT-complete');
+      await completeTrigger.trigger(completeToken);
+      throw new Error(errText);
     } finally {
       this.ongoing = false;
     }

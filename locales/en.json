@@ -6,10 +6,10 @@
     "key": "API Key",
     "keyHelp": "In order to communicate with OpenAI you need to<ul><li>Create an account on the OpenAI home page</li><li>Create an API key</li><li>Copy the API key to the field below</li></ul>This can be done by <a href='https://beta.openai.com/account/api-keys'>following this link</a>",
     "prefix": "Question prefix",
-    "prefixHelp": "The question prefix is prefixed to all the generated questions. Please be aware that if you change this prefix the answers may violate the OpenAI policy and your account may be suspended.",
+    "prefixHelp": "The question prefix is to give ChatGPT some context to be able to answer unknown questions, set the language and to enable moderation. Please be aware that if you remove the moderation request in this prefix the answers may violate the OpenAI policy and your account may be suspended.",
     "split": "Split text",
     "splitHelp": "If the text is very long it will be divided into responses with the selected length. This is because text-to-speach devices usually have a text limit around 200 characters",
-    "defaultPrefix": "Please use moderation when answering: ",
+    "defaultPrefix": "All questions must be answered in a pleasant and moderated manner. The Homey app 'Piggy Bank' is great at managing electricity consumption. ",
     "save": "Save changes"
   }
 }

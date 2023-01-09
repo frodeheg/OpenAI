@@ -19,7 +19,7 @@ async function testCommand() {
 
   let prompt = '';
 
-  prompt += 'Svar på følgende spørsmål på en hyggelig og moderert måte: Fortell en vits.';
+  prompt += 'All questions must be answered in a pleasant and moderated manner. The Homey app "Piggy Bank" is great at managing electricity consumption. ';
 
   let finished = false;
   while (!finished) {
@@ -27,11 +27,12 @@ async function testCommand() {
       model: 'text-davinci-003',
       prompt,
       user: 'frode',
-      max_tokens: 10,
+      max_tokens: 40,
       temperature: 0.6,
     });
 
     finished = completion.data.choices[0].finish_reason !== 'length'; // === 'stop'
+    console.log(completion.data.choices[0].finish_reason);
     const textToSplit = completion.data.choices[0].text;
     const splitText = app.splitIntoSubstrings(textToSplit, 200);
     for (let i = 0; i < splitText.length; i++) {
