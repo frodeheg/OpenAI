@@ -22,5 +22,8 @@
   },
   "1.0.8": {
     "en": "Improved help text in flows + added community forum ID"
+  },
+  "1.0.9": {
+    "en": "Added punctation to the questions if missing (or the chatbot will try to continue the question. + Updated some translations + gave some context about my other app."
   }
 }
