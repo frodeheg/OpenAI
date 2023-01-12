@@ -28,5 +28,8 @@
   },
   "1.1.0": {
     "en": "Added an advanced flow card that returns the full answer + Updated the text and translations + added information about pricing + added selection of engines + added rate limitation + added safety guards to prevent lockups. + Added response text when aborted due to time constraints or too long text. + Reduced maxlength to 4500 as anything above makes ChatGPT crash."
+  },
+  "1.1.1": {
+    "en": "Allowed shorter timeout limits"
   }
 }
