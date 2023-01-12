@@ -1,8 +1,8 @@
 This app lets you talk directly with OpenAI ChatGPT through flows.
 
-After installing the app, set up an API key in the app settings. Instructions are given.
+After installing the app, set up a free API key in the app settings. The API key will work for up to 3 months before it lapses. After the trial period the API key can be reactivated with a subscription.
 
-Please follow the following guidelines when creating flows, or the app will be in danger of being shut down:
+Please follow the following guidelines when creating flows, or your account will be in danger of being shut down:
 
 The following use-cases are prohibited:
 * Illegal or harmful industries

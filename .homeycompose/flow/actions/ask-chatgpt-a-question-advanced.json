@@ -1,0 +1,42 @@
+{
+  "title": {
+    "en": "Ask ChatGPT a question and *WAIT* for the full answer (returns: string)",
+    "no": "Spør ChatGPT et spørsmål og *VENT* på hele svaret (returnerer: tekst)"
+  },
+  "titleFormatted": {
+    "en": "Ask ChatGPT the question [[Question]] and wait for the full answer",
+    "no": "Spør ChatGPT spørsmålet [[Question]] og vent på hele svaret"
+  },
+  "hint": {
+    "en": "This is a very slow operation and should ONLY be used if you don't need a quick response, also the answer is not appropriate for text-to-speech clients who can't handle responses longer than ~200 characters. For this, you should use partial responses instead.\n\nThe question provided with this flow card will be sent to ChatGPT for processing. When completed, the answer will be returned in the text Token {{ChatGPT_FullResponse}}.",
+    "no": "Dette er en veldig treg operasjon og bør KUN brukes hvis du ikke trenger et raskt svar. Svaret er heller ikke egnet for tekst-til-tale-klienter som ikke kan håndtere svar lengre enn ~200 tegn. For dette bør du bruke delvise svar i stedet.\n\nSpørsmålet som følger med dette flytkortet vil bli sendt til ChatGPT for behandling. Når det er fullført, vil svaret bli returnert i teksten Token {{ChatGPT_FullResponse}}."
+  },
+  "args": [
+    {
+      "type": "text",
+      "name": "Question",
+      "title": {
+        "en": "Question to ask ChatGPT",
+        "no": "Spørsmål å spille ChatGPT"
+      },
+      "placeholder": {
+        "en": "question",
+        "no": "spørsmål"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "ChatGPT_FullResponse",
+      "type": "string",
+      "title": {
+        "en": "ChatGPT Full Response",
+        "no": "ChatGPT Fullt svar"
+      },
+      "example": {
+        "en": "I can answer all your questions",
+        "no": "Jeg kan svaret på alle dine spørsmål"
+      }
+    }
+  ]
+}

@@ -58,6 +58,7 @@
           "en": "When ChatGPT is answering a question the first partial answer will trigger this card. The proceeding partial answers will be delayed until the flow action 'Tell ChatGPT to send next partial answer' is called. This is to ensure that the text-to-speech engine has time to finish processing a partial answer before a new one arrives.",
           "no": "Når ChatGPT svarer på et spørsmål, vil det første delsvaret utløse dette kortet. De videre delsvarene vil bli forsinket til flythandlingen 'Be ChatGPT om å sende neste delsvar' kalles. Dette er for å sikre at tekst-til-tale-motoren rekker å fullføre behandlingen av et delsvar før et nytt kommer."
         },
+        "highlight": true,
         "tokens": [
           {
             "name": "ChatGPT_Response",
@@ -107,17 +108,61 @@
     "actions": [
       {
         "title": {
-          "en": "Ask ChatGPT a question",
-          "no": "Spør ChatGPT et spørsmål"
+          "en": "Ask ChatGPT a question and *WAIT* for the full answer (returns: string)",
+          "no": "Spør ChatGPT et spørsmål og *VENT* på hele svaret (returnerer: tekst)"
         },
         "titleFormatted": {
-          "en": "Ask ChatGPT the question [[Question]]",
-          "no": "Spør ChatGPT spørsmålet [[Question]]"
+          "en": "Ask ChatGPT the question [[Question]] and wait for the full answer",
+          "no": "Spør ChatGPT spørsmålet [[Question]] og vent på hele svaret"
+        },
+        "hint": {
+          "en": "This is a very slow operation and should ONLY be used if you don't need a quick response, also the answer is not appropriate for text-to-speech clients who can't handle responses longer than ~200 characters. For this, you should use partial responses instead.\n\nThe question provided with this flow card will be sent to ChatGPT for processing. When completed, the answer will be returned in the text Token {{ChatGPT_FullResponse}}.",
+          "no": "Dette er en veldig treg operasjon og bør KUN brukes hvis du ikke trenger et raskt svar. Svaret er heller ikke egnet for tekst-til-tale-klienter som ikke kan håndtere svar lengre enn ~200 tegn. For dette bør du bruke delvise svar i stedet.\n\nSpørsmålet som følger med dette flytkortet vil bli sendt til ChatGPT for behandling. Når det er fullført, vil svaret bli returnert i teksten Token {{ChatGPT_FullResponse}}."
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "Question",
+            "title": {
+              "en": "Question to ask ChatGPT",
+              "no": "Spørsmål å spille ChatGPT"
+            },
+            "placeholder": {
+              "en": "question",
+              "no": "spørsmål"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "ChatGPT_FullResponse",
+            "type": "string",
+            "title": {
+              "en": "ChatGPT Full Response",
+              "no": "ChatGPT Fullt svar"
+            },
+            "example": {
+              "en": "I can answer all your questions",
+              "no": "Jeg kan svaret på alle dine spørsmål"
+            }
+          }
+        ],
+        "id": "ask-chatgpt-a-question-advanced"
+      },
+      {
+        "title": {
+          "en": "Ask ChatGPT a question and trigger partial responses",
+          "no": "Spør ChatGPT et spørsmål og utløs delsvar"
+        },
+        "titleFormatted": {
+          "en": "Ask ChatGPT the question [[Question]] and trigger partial responses",
+          "no": "Spør ChatGPT spørsmålet [[Question]] og utløs delsvar"
         },
         "hint": {
           "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered multiple times with partial answers while the answer is being processed.",
           "no": "Spørsmålet som blir stilt blir sendt til ChatGPT for behandling. Når delsvarene mottas vil de sendes i stadig nye trigger-kort inntil samtlige delsvar er fullført."
         },
+        "highlight": true,
         "args": [
           {
             "type": "text",
@@ -147,6 +192,7 @@
           "en": "The pending partial answers are delayed until requested by this action. This is to prevent the text-to-speech device to be overwhelmed with commands.",
           "no": "De ventende delsvarene blir forsinket til de blir etterspurt av denne handlingen. Dette er for å forhindre at tekst-til-tale-enheten blir overlesset med kommandoer."
         },
+        "highlight": true,
         "id": "flush-queue"
       }
     ]

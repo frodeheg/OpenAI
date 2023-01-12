@@ -2,11 +2,19 @@
 <html>
   <head>
     <!-- The '/homey.js' script must be included in your settings view to work -->
-    <script
-      type="text/javascript"
-      src="/homey.js"
-      data-origin="settings"
-    ></script>
+    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+    <script type="text/javascript">
+      function limitElement(object) {
+        if(object.value != "") {
+          if(parseInt(object.value) < parseInt(object.min)){
+            object.value = object.min;
+          }
+          if(parseInt(object.value) > parseInt(object.max)){
+            object.value = object.max;
+          }
+        }
+      }
+    </script>
   </head>
   <body>
     <header class="homey-header">
@@ -18,32 +26,60 @@
       </p>
     </header>
 
+    <form class="homey-form">
     <fieldset class="homey-form-fieldset">
-      <legend class="homey-form-legend" data-i18n="settings.api">API</legend>
-
-      <p data-i18n="settings.keyHelp"></p>
+      <!-- <legend class="homey-form-legend" data-i18n="settings.api">API</legend> -->
 
       <div class="homey-form-group">
+        <p data-i18n="settings.keyHelp" class="homey-form-label"></p>
         <label class="homey-form-label" for="APIKey" data-i18n="settings.key">key</label>
         <input class="homey-form-input" id="APIKey" type="text" value="" />
       </div>
 
-      <p data-i18n="settings.prefixHelp"></p>
+      <div class="homey-form-group">
+        <p data-i18n="settings.engineHelp" class="homey-form-label"></p>
+        <label class="homey-form-label" for="engine" data-i18n="settings.engine">engine</label>
+        <select class="homey-form-select" id="engine">
+          <option value="text-davinci-003" selected>Davinci</option>
+          <option value="text-curie-001">Curie</option>
+          <option value="text-babbage-001">Babbage</option>
+          <option value="text-ada-001">Ada</option>
+        </select>
+      </div>
 
       <div class="homey-form-group">
+        <p data-i18n="settings.maxWaitHelp" class="homey-form-label"></p>
+        <label class="homey-form-label" for="maxWait" data-i18n="settings.maxWait">maxWait</label>
+        <input class="homey-form-input" id="maxWait" type="number" value="300" min="10" max="1000" step="1" onchange="limitElement(this);"/>
+      </div>
+
+      <div class="homey-form-group">
+        <p data-i18n="settings.maxLengthHelp" class="homey-form-label"></p>
+        <label class="homey-form-label" for="maxLength" data-i18n="settings.maxLength">maxLength</label>
+        <input class="homey-form-input" id="maxLength" type="number" value="5000" min="1000" max="10000" step="1" onchange="limitElement(this);"/>
+      </div>
+
+      <div class="homey-form-group">
+        <p data-i18n="settings.temperatureHelp" class="homey-form-label"></p>
+        <label class="homey-form-label" for="temperature" data-i18n="settings.temperature">temperature</label>
+        <input class="homey-form-input" id="temperature" type="number" value="0.6" min="0" max="1" step="0.01" onchange="limitElement(this);"/>
+      </div>
+
+      <div class="homey-form-group">
+        <p data-i18n="settings.prefixHelp" class="homey-form-label"></p>
         <label class="homey-form-label" for="prefix" data-i18n="settings.prefix">prefix</label>
         <input class="homey-form-input" id="prefix" type="text" value="" />
       </div>
 
-      <p data-i18n="settings.splitHelp"></p>
-
       <div class="homey-form-group">
+        <p data-i18n="settings.splitHelp" class="homey-form-label"></p>
         <label class="homey-form-label" for="split" data-i18n="settings.split">split</label>
-        <input class="homey-form-input" id="split" type="number" value="" />
+        <input class="homey-form-input" id="split" type="number" value="200" min="10" max="1000" step="1" onchange="limitElement(this);"/>
       </div>
     </fieldset>
 
     <button id="save" class="homey-button-primary-full" data-i18n="settings.save">Save changes</button>
+    </form>
 
     <script type="text/javascript">
       // a method named 'onHomeyReady' must be present in your code
@@ -52,6 +88,10 @@
         Homey.ready();
         
         var APIKeyElement = document.getElementById("APIKey");
+        var engineElement = document.getElementById("engine");
+        var maxWaitElement = document.getElementById("maxWait");
+        var maxLengthElement = document.getElementById("maxLength");
+        var temperatureElement = document.getElementById("temperature");
         var prefixElement = document.getElementById("prefix");
         var splitElement = document.getElementById("split");
         var saveElement = document.getElementById("save");
@@ -59,6 +99,26 @@
         Homey.get("APIKey", function (err, APIKey) {
           if (err) return Homey.alert(err);
           APIKeyElement.value = APIKey;
+        });
+
+        Homey.get("engine", function (err, engine) {
+          if (err) return Homey.alert(err);
+          engineElement.value = engine;
+        });
+
+        Homey.get("maxWait", function (err, maxWait) {
+          if (err) return Homey.alert(err);
+          maxWaitElement.value = maxWait;
+        });
+
+        Homey.get("maxLength", function (err, maxLength) {
+          if (err) return Homey.alert(err);
+          maxLengthElement.value = maxLength;
+        });
+
+        Homey.get("temperature", function (err, temperature) {
+          if (err) return Homey.alert(err);
+          temperatureElement.value = temperature;
         });
 
         Homey.get("prefix", function (err, prefix) {
@@ -73,6 +133,18 @@
 
         saveElement.addEventListener("click", function (e) {
           Homey.set("APIKey", APIKeyElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          Homey.set("engine", engineElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          Homey.set("maxWait", maxWaitElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          Homey.set("maxLength", maxLengthElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          Homey.set("temperature", temperatureElement.value, function (err) {
             if (err) return Homey.alert(err);
           });
           Homey.set("prefix", prefixElement.value, function (err) {

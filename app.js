@@ -3,6 +3,9 @@
 const Homey = require('homey');
 const { Configuration, OpenAIApi } = require('openai');
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 class MyApp extends Homey.App {
 
   /**
@@ -15,6 +18,34 @@ class MyApp extends Homey.App {
       this.log('First time running so creating unique UserID');
       this.randomName = `${Math.random()}-${Math.random()}-${Math.random()}-${Math.random()}`;
       this.homey.settings.set('UserID', this.randomName);
+    }
+
+    this.engine = this.homey.settings.get('engine');
+    if (this.engine === null) {
+      this.log('First time running so setting default engine');
+      this.engine = 'text-davinci-003';
+      this.homey.settings.set('engine', this.engine);
+    }
+
+    this.maxWait = this.homey.settings.get('maxWait');
+    if (this.maxWait === null) {
+      this.log('First time running so setting default maxWait');
+      this.maxWait = 60 * 5;
+      this.homey.settings.set('maxWait', this.maxWait);
+    }
+
+    this.maxLength = this.homey.settings.get('maxLength');
+    if (this.maxLength === null) {
+      this.log('First time running so setting default maxLength');
+      this.maxLength = 5000;
+      this.homey.settings.set('maxLength', this.maxLength);
+    }
+
+    this.temperature = this.homey.settings.get('temperature');
+    if (this.temperature === null) {
+      this.log('First time running so setting default temperature');
+      this.temperature = 0.6;
+      this.homey.settings.set('temperature', this.temperature);
     }
 
     this.prefix = this.homey.settings.get('prefix');
@@ -50,11 +81,15 @@ class MyApp extends Homey.App {
     });
     this.openai = new OpenAIApi(this.configuration);
 
-    // Simple flows flocard
+    // Simple flows flowcard
     const askQuestionActionSimple = this.homey.flow.getActionCard('ask-chatgpt-a-question-simple');
     askQuestionActionSimple.registerRunListener(async (args, state) => {
       await this.askQuestion(args.Question);
     });
+
+    // Advanced flow flowcard
+    const askQuestionActionAdvanced = this.homey.flow.getActionCard('ask-chatgpt-a-question-advanced');
+    askQuestionActionAdvanced.registerRunListener(async (args, state) => this.askQuestion(args.Question));
 
     // Start next partial answer
     const flushQueueAction = this.homey.flow.getActionCard('flush-queue');
@@ -95,7 +130,7 @@ class MyApp extends Homey.App {
         || question.endsWith('!'))) {
         question += '.';
       }
-      const now = new Date();
+      let now = new Date();
       if (now - this.prevTime > (1000 * 60 * 10)) {
         // Forget the conversation after 10 minutes
         this.log('Forgetting the conversation');
@@ -105,17 +140,26 @@ class MyApp extends Homey.App {
       }
       this.prevTime = now;
       this.prompt += question;
+      if (this.prompt.length > 5000) {
+        this.log('Forgetting what was before 5000 characters ago');
+        this.prompt = this.prompt.substr(-5000);
+      }
       let finished = false;
+      let prevReqTime = new Date(now.getTime() - 1000 * 2);
       while (!finished) {
         const completion = await this.openai.createCompletion({
-          model: 'text-davinci-003',
+          model: this.engine,
           prompt: this.prompt + pendingText,
-          temperature: 0.6,
+          temperature: this.temperature,
           user: this.randomName,
-          max_tokens: 20,
+          max_tokens: 40,
         });
 
-        finished = completion.data.choices[0].finish_reason !== 'length'; // === 'stop'
+        now = new Date();
+        const lapsedTime = (now - this.prevTime) / 1000;
+        finished = (completion.data.choices[0].finish_reason !== 'length') // === 'stop'
+          || (fullText.length > this.maxLength)
+          || (lapsedTime > this.maxWait);
         let response = pendingText + completion.data.choices[0].text;
         let splitPos = -1;
         const punctations = ['.', ',', ':', ';'];
@@ -141,18 +185,26 @@ class MyApp extends Homey.App {
         const splitText = this.splitIntoSubstrings(response, this.homey.settings.get('split'));
         for (let idx = 0; idx < splitText.length; idx++) {
           await this.sendToken(splitText[idx].replace(/^(\.|\?| )+/gm, ''));
-          console.log(`Delsvar: ${splitText[idx]}`);
+          console.log(`Partial answer: ${splitText[idx]}`);
           this.prompt += splitText[idx];
           fullText += splitText[idx];
+        }
+        // Make sure we don't ask more than once per second:
+        if (!finished) {
+          const timeDiff = now - prevReqTime;
+          if (timeDiff < 1100) {
+            await sleep(1100 - timeDiff);
+          }
+          prevReqTime = now;
         }
       }
       const completeToken = { ChatGPT_FullResponse: fullText };
       const completeTrigger = this.homey.flow.getTriggerCard('chatGPT-complete');
-      console.log(`Fullt svar: ${fullText}`);
+      console.log(`Full answer: ${fullText}`);
       // console.log(`Token: ${this.prompt} ||| ${pendingText}`);
       await completeTrigger.trigger(completeToken);
     } catch (err) {
-      const errText = `Error: ${err}`;
+      const errText = `${err}`;
       await this.sendToken(errText);
       const completeToken = { ChatGPT_FullResponse: errText };
       const completeTrigger = this.homey.flow.getTriggerCard('chatGPT-complete');
@@ -161,7 +213,7 @@ class MyApp extends Homey.App {
     } finally {
       this.ongoing = false;
     }
-    return { ChatGPT_Response: fullText.replace(/^(\.|\?| )+/gm, '') };
+    return { ChatGPT_FullResponse: fullText };
   }
 
   async sendToken(token = undefined) {

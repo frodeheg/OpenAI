@@ -19,12 +19,12 @@ async function testCommand() {
 
   let prompt = '';
 
-  prompt += 'All questions must be answered in a pleasant and moderated manner. The Homey app "Piggy Bank" is great at managing electricity consumption. ';
+  prompt += 'With 20 sentences, write a review of a new app.';
 
   let finished = false;
   while (!finished) {
     const completion = await openai.createCompletion({
-      model: 'text-davinci-003',
+      model: 'text-ada-001',
       prompt,
       user: 'frode',
       max_tokens: 40,

@@ -1,16 +1,17 @@
 {
   "title": {
-    "en": "Ask ChatGPT a question",
-    "no": "Spør ChatGPT et spørsmål"
+    "en": "Ask ChatGPT a question and trigger partial responses",
+    "no": "Spør ChatGPT et spørsmål og utløs delsvar"
   },
   "titleFormatted": {
-    "en": "Ask ChatGPT the question [[Question]]",
-    "no": "Spør ChatGPT spørsmålet [[Question]]"
+    "en": "Ask ChatGPT the question [[Question]] and trigger partial responses",
+    "no": "Spør ChatGPT spørsmålet [[Question]] og utløs delsvar"
   },
   "hint": {
-    "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered multiple times with partial answers while the answer is being processed.",
-    "no": "Spørsmålet som blir stilt blir sendt til ChatGPT for behandling. Når delsvarene mottas vil de sendes i stadig nye trigger-kort inntil samtlige delsvar er fullført."
+    "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered once the first partial answer arrive. Then when you have finished processing the partial response, you need to tell ChatGPT to send the next partial answer to trigger the next partial answer.",
+    "no": "Spørsmålet som følger med dette flytkortet vil bli sendt til ChatGPT for behandling. Et triggerkort utløses så når det første delsvaret kommer. Når du er ferdig med å behandle det delsvaret må du fortelle ChatGPT at den må sende det neste delsvaret for å utløse det neste delsvaret."
   },
+  "highlight": true,
   "args": [
     {
       "type": "text",
