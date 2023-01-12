@@ -158,7 +158,7 @@ class MyApp extends Homey.App {
         const completion = await this.openai.createCompletion({
           model: this.engine,
           prompt: this.prompt + pendingText,
-          temperature: this.temperature,
+          temperature: +this.temperature,
           user: this.randomName,
           max_tokens: 40,
         });
@@ -197,7 +197,7 @@ class MyApp extends Homey.App {
         const splitText = this.splitIntoSubstrings(response, this.homey.settings.get('split'));
         for (let idx = 0; idx < splitText.length; idx++) {
           await this.sendToken(splitText[idx].replace(/^(\.|\?| )+/gm, ''));
-          console.log(`Partial answer: ${splitText[idx]}`);
+          this.log(`Partial answer: ${splitText[idx]}`);
           this.prompt += splitText[idx];
           fullText += splitText[idx];
         }
@@ -212,13 +212,20 @@ class MyApp extends Homey.App {
       }
       const completeToken = { ChatGPT_FullResponse: fullText };
       const completeTrigger = this.homey.flow.getTriggerCard('chatGPT-complete');
-      console.log(`Full answer: ${fullText}`);
-      // console.log(`Token: ${this.prompt} ||| ${pendingText}`);
+      this.log(`Full answer: ${fullText}`);
+      // this.log(`Token: ${this.prompt} ||| ${pendingText}`);
       await completeTrigger.trigger(completeToken);
       if (timeExceeded) throw new Error('Time limit exceeded');
       if (lengthExceeded) throw new Error('Response length exceeded');
     } catch (err) {
       const errText = `${err}`;
+      this.log('Query resulted in error:');
+      this.log(`  engine:      ${this.engine}`);
+      this.log(`  temperature: ${this.temperature}`);
+      this.log(`  user:        ${this.randomName}`);
+      this.log(`  prompt: ${this.prompt + pendingText}`)
+      this.log('Error text:');
+      this.log(`  ${err}`);
       await this.sendToken(errText);
       const completeToken = { ChatGPT_FullResponse: errText };
       const completeTrigger = this.homey.flow.getTriggerCard('chatGPT-complete');

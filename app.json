@@ -47,15 +47,15 @@
     "triggers": [
       {
         "title": {
-          "en": "ChatGPT has a partial answer",
+          "en": "ChatGPT has a partial response",
           "no": "ChatGPT har et delsvar"
         },
         "titleFormatted": {
-          "en": "ChatGPT has a partial answer",
+          "en": "ChatGPT has a partial response",
           "no": "ChatGPT har et delsvar"
         },
         "hint": {
-          "en": "When ChatGPT is answering a question the first partial answer will trigger this card. The proceeding partial answers will be delayed until the flow action 'Tell ChatGPT to send next partial answer' is called. This is to ensure that the text-to-speech engine has time to finish processing a partial answer before a new one arrives.",
+          "en": "When ChatGPT is answering a question the first partial answer will trigger this card. The proceeding partial answers will be delayed until the flow action 'Tell ChatGPT to send next partial response' is called. This is to ensure that the text-to-speech engine has time to finish processing a partial answer before a new one arrives.",
           "no": "Når ChatGPT svarer på et spørsmål, vil det første delsvaret utløse dette kortet. De videre delsvarene vil bli forsinket til flythandlingen 'Be ChatGPT om å sende neste delsvar' kalles. Dette er for å sikre at tekst-til-tale-motoren rekker å fullføre behandlingen av et delsvar før et nytt kommer."
         },
         "highlight": true,
@@ -159,8 +159,8 @@
           "no": "Spør ChatGPT spørsmålet [[Question]] og utløs delsvar"
         },
         "hint": {
-          "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered multiple times with partial answers while the answer is being processed.",
-          "no": "Spørsmålet som blir stilt blir sendt til ChatGPT for behandling. Når delsvarene mottas vil de sendes i stadig nye trigger-kort inntil samtlige delsvar er fullført."
+          "en": "The question provided with this flow card will be sent to ChatGPT for processing. A trigger card is then triggered once the first partial answer arrive. Then when you have finished processing the partial response, you need to tell ChatGPT to send the next partial answer to trigger the next partial answer.",
+          "no": "Spørsmålet som følger med dette flytkortet vil bli sendt til ChatGPT for behandling. Et triggerkort utløses så når det første delsvaret kommer. Når du er ferdig med å behandle det delsvaret må du fortelle ChatGPT at den må sende det neste delsvaret for å utløse det neste delsvaret."
         },
         "highlight": true,
         "args": [
@@ -181,15 +181,15 @@
       },
       {
         "title": {
-          "en": "Tell ChatGPT to send next partial answer",
+          "en": "Tell ChatGPT to send next partial response",
           "no": "Be ChatGPT om å sende neste delsvar"
         },
         "titleFormatted": {
-          "en": "Tell ChatGPT to send next partial answer",
+          "en": "Tell ChatGPT to send next partial response",
           "no": "Be ChatGPT om å sende neste delsvar"
         },
         "hint": {
-          "en": "The pending partial answers are delayed until requested by this action. This is to prevent the text-to-speech device to be overwhelmed with commands.",
+          "en": "The pending partial responses are delayed until requested by this action. This is to prevent the text-to-speech device to be overwhelmed with commands.",
           "no": "De ventende delsvarene blir forsinket til de blir etterspurt av denne handlingen. Dette er for å forhindre at tekst-til-tale-enheten blir overlesset med kommandoer."
         },
         "highlight": true,
