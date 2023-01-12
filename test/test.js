@@ -4,6 +4,10 @@ const { Configuration, OpenAIApi } = require('openai');
 const Homey = require('./homey');
 const ChatGPT = require('../app');
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function testCommand() {
   const app = new ChatGPT();
   const configuration = new Configuration({
@@ -19,26 +23,35 @@ async function testCommand() {
 
   let prompt = '';
 
-  prompt += 'With 20 sentences, write a review of a new app.';
+  prompt += 'Alle spørsmål må besvares på en hyggelig og moderert måte.';
 
   let finished = false;
+  let i = 0;
   while (!finished) {
-    const completion = await openai.createCompletion({
-      model: 'text-ada-001',
-      prompt,
-      user: 'frode',
-      max_tokens: 40,
-      temperature: 0.6,
-    });
+    let completion;
+    try {
+      completion = await openai.createCompletion({
+        model: 'text-ada-001',
+        prompt,
+        user: 'frode',
+        max_tokens: 40,
+        temperature: 0.6,
+      });
+      console.log(`Iteration: ${i} : ${JSON.stringify(completion.data)}`);
+    } catch (err) {
+      console.log('ERROR');
+      console.log(err);
+    }
+    await sleep(1500);
 
-    finished = completion.data.choices[0].finish_reason !== 'length'; // === 'stop'
-    console.log(completion.data.choices[0].finish_reason);
+    finished = false;// completion.data.choices[0].finish_reason !== 'length'; // === 'stop'
     const textToSplit = completion.data.choices[0].text;
     const splitText = app.splitIntoSubstrings(textToSplit, 200);
     for (let i = 0; i < splitText.length; i++) {
       console.log(`Answer: '${splitText[i]}'`);
       prompt += splitText[i];
     }
+    i++;
   }
 
   console.log(prompt);

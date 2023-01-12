@@ -37,7 +37,7 @@ class MyApp extends Homey.App {
     this.maxLength = this.homey.settings.get('maxLength');
     if (this.maxLength === null) {
       this.log('First time running so setting default maxLength');
-      this.maxLength = 5000;
+      this.maxLength = 4000;
       this.homey.settings.set('maxLength', this.maxLength);
     }
 
@@ -148,12 +148,13 @@ class MyApp extends Homey.App {
       }
       this.prevTime = now;
       this.prompt += question;
-      if (this.prompt.length > 5000) {
-        this.log('Forgetting what was before 5000 characters ago');
-        this.prompt = this.prompt.substr(-5000);
+      if (this.prompt.length > this.maxLength) {
+        this.log(`Forgetting what was before ${this.maxLength} characters ago`);
+        this.prompt = this.prompt.substr(-(this.maxLength - pendingText.length));
       }
       let finished = false;
-      let prevReqTime = new Date(now.getTime() - 1000 * 2);
+      const startTime = new Date(now.getTime() - 1000 * 2);
+      let nRequests = 1;
       while (!finished) {
         const completion = await this.openai.createCompletion({
           model: this.engine,
@@ -165,7 +166,9 @@ class MyApp extends Homey.App {
 
         now = new Date();
         const lapsedTime = (now - this.prevTime) / 1000;
-        let response = pendingText + completion.data.choices[0].text;
+        let newText = completion.data.choices[0].text;
+        newText = newText.replace(/[\r\n]/gm, '');
+        let response = pendingText + newText;
         lengthExceeded = (fullText.length + response.length) > this.maxLength;
         if (lengthExceeded) response += '. Aborted, length exceeded.';
         timeExceeded = lapsedTime > this.maxWait;
@@ -203,11 +206,13 @@ class MyApp extends Homey.App {
         }
         // Make sure we don't ask more than once per second:
         if (!finished) {
-          const timeDiff = now - prevReqTime;
-          if (timeDiff < 1100) {
-            await sleep(1100 - timeDiff);
+          nRequests++;
+          const timeDiff = (now - startTime) / 1000;
+          const rate = nRequests / timeDiff;
+          if (rate > 0.6) {
+            this.log('Query rate exceeded, waiting 1.5 secconds');
+            await sleep(1500);
           }
-          prevReqTime = now;
         }
       }
       const completeToken = { ChatGPT_FullResponse: fullText };
@@ -223,7 +228,7 @@ class MyApp extends Homey.App {
       this.log(`  engine:      ${this.engine}`);
       this.log(`  temperature: ${this.temperature}`);
       this.log(`  user:        ${this.randomName}`);
-      this.log(`  prompt: ${this.prompt + pendingText}`)
+      this.log(`  prompt: ${this.prompt + pendingText}`);
       this.log('Error text:');
       this.log(`  ${err}`);
       await this.sendToken(errText);
