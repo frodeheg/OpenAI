@@ -68,6 +68,12 @@ class MyApp extends Homey.App {
           apiKey: this.homey.settings.get('APIKey'),
         });
       }
+      this.engine = this.homey.settings.get('engine');
+      this.maxWait = this.homey.settings.get('maxWait');
+      this.maxLength = this.homey.settings.get('maxLength');
+      this.temperature = this.homey.settings.get('temperature');
+      this.prefix = this.homey.settings.get('prefix');
+      this.split = this.homey.settings.get('split');
     });
 
     this.prompt = this.prefix;
@@ -124,6 +130,8 @@ class MyApp extends Homey.App {
     this.ongoing = true;
     let fullText = '';
     let pendingText = '';
+    let lengthExceeded = false;
+    let timeExceeded = false;
     try {
       if (!(question.endsWith('.')
         || question.endsWith('?')
@@ -157,16 +165,20 @@ class MyApp extends Homey.App {
 
         now = new Date();
         const lapsedTime = (now - this.prevTime) / 1000;
-        finished = (completion.data.choices[0].finish_reason !== 'length') // === 'stop'
-          || (fullText.length > this.maxLength)
-          || (lapsedTime > this.maxWait);
         let response = pendingText + completion.data.choices[0].text;
+        lengthExceeded = (fullText.length + response.length) > this.maxLength;
+        if (lengthExceeded) response += '. Aborted, length exceeded.';
+        timeExceeded = lapsedTime > this.maxWait;
+        if (timeExceeded) response += '. Aborted, time exceeded.';
+        finished = (completion.data.choices[0].finish_reason !== 'length') // === 'stop'
+          || lengthExceeded
+          || timeExceeded;
         let splitPos = -1;
         const punctations = ['.', ',', ':', ';'];
         for (let idx = 0; idx < punctations.length; idx++) {
           const dot = punctations[idx];
           const lastDot = response.lastIndexOf(dot);
-          if ((lastDot > splitPos) && (lastDot < 200)) {
+          if ((lastDot > splitPos) && (lastDot < this.split)) {
             splitPos = lastDot;
           }
         }
@@ -203,6 +215,8 @@ class MyApp extends Homey.App {
       console.log(`Full answer: ${fullText}`);
       // console.log(`Token: ${this.prompt} ||| ${pendingText}`);
       await completeTrigger.trigger(completeToken);
+      if (timeExceeded) throw new Error('Time limit exceeded');
+      if (lengthExceeded) throw new Error('Response length exceeded');
     } catch (err) {
       const errText = `${err}`;
       await this.sendToken(errText);
