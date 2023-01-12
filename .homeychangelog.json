@@ -34,5 +34,8 @@
   },
   "1.1.2": {
     "en": "Minor changes to flow name"
+  },
+  "1.1.3": {
+    "en": "Moved the AD for my other app into an image in the settings page"
   }
 }
