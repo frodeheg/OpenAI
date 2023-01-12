@@ -17,7 +17,8 @@
       "prefixHelp": "Spørsmålsprefikset er for å gi ChatGPT litt kontekst for å kunne svare på ukjente spørsmål, stille inn språket og aktivere moderering. Vær oppmerksom på at hvis du fjerner modereringsforespørselen i dette prefikset, kan svarene bryte OpenAI-retningslinjene og kontoen din kan bli suspendert.",
       "split": "Tekstoppdeling",
       "splitHelp": "Dersom teksten er veldig lang vil den bli delt opp i mindre enheter med valgt lengde. Dette er fordi mange tekst-til-tale enheter har en maks tekstlengde på rundt 200 bokstaver.",
-      "defaultPrefix": "Alle spørsmål må besvares på en hyggelig og moderert måte. Homey appen Sparegris er god på å styre strømforbruket innenfor ønsket effekttariff. ",
-      "save": "Lagre endringer"
+      "defaultPrefix": "Alle spørsmål må besvares på en hyggelig og moderert måte. ",
+      "save": "Lagre endringer",
+      "piggyImg": "piggy_no.png"
     }
   }
