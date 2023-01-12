@@ -108,12 +108,12 @@
     "actions": [
       {
         "title": {
-          "en": "Ask ChatGPT a question and *WAIT* for the full answer (returns: string)",
-          "no": "Spør ChatGPT et spørsmål og *VENT* på hele svaret (returnerer: tekst)"
+          "en": "Ask ChatGPT a question and _WAIT_ for the full answer (returns: string)",
+          "no": "Spør ChatGPT et spørsmål og _VENT_ på hele svaret (returnerer: tekst)"
         },
         "titleFormatted": {
-          "en": "Ask ChatGPT the question [[Question]] and wait for the full answer",
-          "no": "Spør ChatGPT spørsmålet [[Question]] og vent på hele svaret"
+          "en": "Ask ChatGPT the question [[Question]] and _WAIT_ for the full answer",
+          "no": "Spør ChatGPT spørsmålet [[Question]] og _VENT_ på hele svaret"
         },
         "hint": {
           "en": "This is a very slow operation and should ONLY be used if you don't need a quick response, also the answer is not appropriate for text-to-speech clients who can't handle responses longer than ~200 characters. For this, you should use partial responses instead.\n\nThe question provided with this flow card will be sent to ChatGPT for processing. When completed, the answer will be returned in the text Token {{ChatGPT_FullResponse}}.",
