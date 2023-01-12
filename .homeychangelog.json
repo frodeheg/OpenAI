@@ -25,5 +25,8 @@
   },
   "1.0.9": {
     "en": "Added punctation to the questions if missing (or the chatbot will try to continue the question. + Updated some translations + gave some context about my other app."
+  },
+  "1.1.0": {
+    "en": "Added an advanced flow card that returns the full answer + Updated the text and translations + added information about pricing + added selection of engines + added rate limitation + added safety guards to prevent lockups. + Added response text when aborted due to time constraints or too long text. + Reduced maxlength to 4500 as anything above makes ChatGPT crash."
   }
 }
