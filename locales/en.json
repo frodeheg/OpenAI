@@ -2,7 +2,9 @@
   "settings": {
     "title": "Settings",
     "subtitle": "OpenAI ChatGPT",
-    "api": "API",
+    "api": "API settings",
+    "preProcess": "Pre Processing",
+    "postProcess": "Post Processing",
     "key": "API Key",
     "keyHelp": "In order to communicate with OpenAI you need to<ul><li>Create an account on the OpenAI home page</li><li>Create an API key</li><li>Copy the API key to the field below</li></ul>This can be done by <a href='https://beta.openai.com/account/api-keys'>following this link</a>",
     "engine": "Engine",
@@ -12,7 +14,7 @@
     "maxLength": "Maximum result length",
     "maxLengthHelp": "When the full answer exceeds the maximum number of characters further requests to ChatGPT are aborted and the partial result is returned. This is to prevent endless loops when the chatbot get stuck (more common for the lower quality engines)",
     "temperature": "Temperature",
-    "temperatureHelp": "What sampling temperature to use. Higher values means the model will take more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer.",
+    "temperatureHelp": "What sampling temperature to use. Higher values means the model will take more risks. Try 0.9 for more creative output, and 0 for well-defined answers.",
     "prefix": "Question prefix",
     "prefixHelp": "The question prefix is to give ChatGPT some context to be able to answer unknown questions, set the language and to enable moderation. Please be aware that if you remove the moderation request in this prefix the answers may violate the OpenAI policy and your account may be suspended.",
     "split": "Split text",
@@ -20,5 +22,12 @@
     "defaultPrefix": "All questions must be answered in a pleasant and moderated manner. ",
     "save": "Save changes",
     "piggyImg": "piggy_en.png"
+  },
+  "log": {
+    "title": "Log",
+    "status": "Status",
+    "logIn": "Last Input",
+    "logOut": "Last Output",
+    "queue": "Queue"
   }
 }

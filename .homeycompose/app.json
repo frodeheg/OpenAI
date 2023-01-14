@@ -32,6 +32,13 @@
     "name": "Frode Heggelund",
     "email": "frode.heggelund@gmail.com"
   },
+  "api": {
+    "updateLog": {
+      "method": "GET",
+      "path": "/updateLog",
+      "public": false
+    }
+  },
   "tags": {
     "en": [
       "OpenAI",

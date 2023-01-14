@@ -6,12 +6,19 @@ const { Configuration, OpenAIApi } = require('openai');
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+const STATUS_WAIT_RESPONE = 'Waiting for ChatGPT';
+const STATUS_WAIT_QUEUE = 'Queued output not requested';
+const STATUS_IDLE = 'Idle';
 class MyApp extends Homey.App {
 
   /**
    * onInit is called when the app is initialized.
    */
   async onInit() {
+    this.__status = STATUS_IDLE;
+    this.__input = '';
+    this.__output = '';
     this.log('MyApp has been initialized');
     this.randomName = this.homey.settings.get('UserID');
     if (this.randomName === null) {
@@ -156,9 +163,11 @@ class MyApp extends Homey.App {
       const startTime = new Date(now.getTime() - 1000 * 2);
       let nRequests = 1;
       while (!finished) {
+        this.__input = this.prompt + pendingText;
+        this.__status = STATUS_WAIT_RESPONE;
         const completion = await this.openai.createCompletion({
           model: this.engine,
-          prompt: this.prompt + pendingText,
+          prompt: this.__input,
           temperature: +this.temperature,
           user: this.randomName,
           max_tokens: 40,
@@ -166,8 +175,8 @@ class MyApp extends Homey.App {
 
         now = new Date();
         const lapsedTime = (now - this.prevTime) / 1000;
-        let newText = completion.data.choices[0].text;
-        newText = newText.replace(/[\r\n]/gm, '');
+        this.__output = completion.data.choices[0].text;
+        const newText = this.__output.replace(/[\r\n]/gm, '');
         let response = pendingText + newText;
         lengthExceeded = (fullText.length + response.length) > this.maxLength;
         if (lengthExceeded) response += '. Aborted, length exceeded.';
@@ -224,6 +233,7 @@ class MyApp extends Homey.App {
       if (lengthExceeded) throw new Error('Response length exceeded');
     } catch (err) {
       const errText = `${err}`;
+      this.__output = errText;
       this.log('Query resulted in error:');
       this.log(`  engine:      ${this.engine}`);
       this.log(`  temperature: ${this.temperature}`);
@@ -244,9 +254,11 @@ class MyApp extends Homey.App {
 
   async sendToken(token = undefined) {
     if (token !== undefined) {
+      this.__status = STATUS_WAIT_QUEUE;
       this.tokenQueue.push(token);
     }
     if (this.tokenQueue.length === 0) {
+      this.__status = STATUS_IDLE;
       return Promise.reject(new Error('There are no more partial answers'));
     }
     if (this.canSendToken) {

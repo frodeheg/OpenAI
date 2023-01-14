@@ -16,71 +16,190 @@
       }
     </script>
   </head>
-  <body>
-    <header class="homey-header">
-      <h1 class="homey-title" data-i18n="settings.title">
-        <!-- This will be filled with the translated string with key 'settings.title'. -->
-      </h1>
-      <p class="homey-subtitle" data-i18n="settings.subtitle">
-        <!-- This field will also be translated -->
-      </p>
-    </header>
+  <body style="background:#E0E0E8;">
+
+    <style>
+      .hintButton {
+        cursor: zoom-in;
+        display: inline-block;
+        text-align:center;
+        font-weight: bold;
+        font-size: 1em;
+        width: 19px;
+        height: 19px;
+        border: 1px solid black;
+        border-radius: 15px;
+        color: black;
+        background-image: radial-gradient(white, rgb(145, 145, 255), rgb(115, 115, 255));
+        box-shadow: 2px 2px 10px gray;
+      }
+      .hintButton:hover {
+        box-shadow: 0px 0px 10px 2px gold;
+      }
+      .hint {
+        font-size: 0.8em;
+        color: gray;
+        visibility:visible;
+        display:none;
+      }
+
+      .tabSelector {
+        border-right: 1px solid black;
+        border-left: 1px solid black;
+        border-top: 1px solid black;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding: 10px;
+        background: #F5F5FC;
+        box-shadow: 8px 10px 5px 2px gray;
+
+        text-shadow: 1px 1px 2px white, 0 0 5px gray;
+      }
+      .tabBetween {
+        border-bottom: 1px solid black;
+      }
+      .tab {
+        background: #F5F5FC;
+        border-right: 1px solid black;
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+        padding:10px;
+        box-shadow: 8px 10px 5px 2px gray;
+      }
+    </style>
+
+    <script type="text/javascript">
+      function changePage(newPage) {
+        // Buttons flip
+        document.getElementById('settingsButton').style.background = '#BBBBBB';
+        document.getElementById('statusButton').style.background = '#BBBBBB';
+        document.getElementById(`${newPage}Button`).style.background = '#F5F5FC';
+        // Buttons lower
+        document.getElementById('settingsButton').style.borderBottom = '1px solid black';
+        document.getElementById('statusButton').style.borderBottom = '1px solid black';
+        document.getElementById(`${newPage}Button`).style.borderBottom = '0px solid black';
+        // Page flip
+        document.getElementById('settingsPage').style.display = 'none';
+        document.getElementById('statusPage').style.display = 'none';
+        document.getElementById(`${newPage}Page`).style.display = 'block';
+      }
+
+      function toggle(source, id, type = 'block') {
+        var element = document.getElementById(id);
+
+        var visible = (element.style.display != "") && (element.style.display != "none");
+        if (visible) {
+          element.style.display = 'none';
+          if (source) source.style.cursor = "zoom-in";
+        } else {
+          element.style.display = type;
+          if (source) source.style.cursor = "zoom-out";
+        }
+        return false; // For onclick not to follow the link
+      }
+    </script>
+      
+    <!-- Menu -->
+    <table width="100%" style="padding:0px; border-spacing:0px;">
+      <tr style="text-align: center; font-weight: bold; font-size: 1.5em;">
+        <td class="tabSelector" id="settingsButton" width="45%" onclick="changePage('settings');" data-i18n="settings.title">settings.title</td>
+        <td class="tabBetween" width="10%">&nbsp;</td>
+        <td class="tabSelector" id="statusButton" width="45%" onclick="changePage('status');" data-i18n="log.title">log.title</td>
+      </tr>
+    </table>
+
+    <!-- Settings page -->
+    <div class="tab" id="settingsPage">
+    <!--<h1 class="homey-title" data-i18n="settings.title">settings.title</h1>-->
 
     <fieldset class="homey-form-fieldset">
-      <!-- <legend class="homey-form-legend" data-i18n="settings.api">API</legend> -->
+      <legend class="homey-form-legend" data-i18n="settings.api">settings.api</legend>
+      <!--<p class="homey-subtitle" data-i18n="settings.subtitle">settings.subtitle</p>-->
 
       <div class="homey-form-group">
-        <p data-i18n="settings.keyHelp" class="homey-form-label"></p>
-        <label class="homey-form-label" for="APIKey" data-i18n="settings.key">key</label>
+        <label class="homey-form-label" for="APIKey"><span data-i18n="settings.key">key</span> <div class="hintButton" onclick="toggle(this,'APIKeyHint');return false;">i</div></label>
         <input class="homey-form-input" id="APIKey" type="text" value="" />
+        <p class="hint" id="APIKeyHint" data-i18n="settings.keyHelp" class="homey-form-label">settings.keyHelp</p>
       </div>
 
       <div class="homey-form-group">
-        <p data-i18n="settings.engineHelp" class="homey-form-label"></p>
-        <label class="homey-form-label" for="engine" data-i18n="settings.engine">engine</label>
+        <label class="homey-form-label" for="engine"><span data-i18n="settings.engine">engine</span> <div class="hintButton" onclick="toggle(this,'engineHint');return false;">i</div></label>
         <select class="homey-form-select" id="engine">
           <option value="text-davinci-003" selected>Davinci</option>
           <option value="text-curie-001">Curie</option>
           <option value="text-babbage-001">Babbage</option>
           <option value="text-ada-001">Ada</option>
         </select>
+        <p class="hint" id="engineHint" data-i18n="settings.engineHelp" class="homey-form-label">settings.engineHelp</p>
       </div>
 
       <div class="homey-form-group">
-        <p data-i18n="settings.maxWaitHelp" class="homey-form-label"></p>
-        <label class="homey-form-label" for="maxWait" data-i18n="settings.maxWait">maxWait</label>
-        <input class="homey-form-input" id="maxWait" type="number" value="300" min="2" max="1000" step="1" onchange="limitElement(this);"/>
-      </div>
-
-      <div class="homey-form-group">
-        <p data-i18n="settings.maxLengthHelp" class="homey-form-label"></p>
-        <label class="homey-form-label" for="maxLength" data-i18n="settings.maxLength">maxLength</label>
-        <input class="homey-form-input" id="maxLength" type="number" value="4000" min="100" max="4500" step="1" onchange="limitElement(this);"/>
-      </div>
-
-      <div class="homey-form-group">
-        <p data-i18n="settings.temperatureHelp" class="homey-form-label"></p>
-        <label class="homey-form-label" for="temperature" data-i18n="settings.temperature">temperature</label>
+        <label class="homey-form-label" for="temperature"><span data-i18n="settings.temperature">temperature</span> <div class="hintButton" onclick="toggle(this,'temperatureHint');return false;">i</div></label>
         <input class="homey-form-input" id="temperature" type="number" value="0.6" min="0" max="1" step="0.01" onchange="limitElement(this);"/>
       </div>
+      <p class="hint" id="temperatureHint" data-i18n="settings.temperatureHelp" class="homey-form-label">settings.temperatureHelp</p>
+    </fieldset>
+
+    <fieldset class="homey-form-fieldset">
+      <legend class="homey-form-legend" data-i18n="settings.preProcess">settings.preProcess</legend>
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="prefix"><span data-i18n="settings.prefix">prefix</span> <div class="hintButton" onclick="toggle(this,'prefixHint');return false;">i</div></label>
+        <input class="homey-form-input" id="prefix" type="text" value="" />
+        <p class="hint" id="prefixHint" data-i18n="settings.prefixHelp" class="homey-form-label">settings.prefixHelp</p>
+      </div>
+    </fieldset>
+
+    <fieldset class="homey-form-fieldset">
+      <legend class="homey-form-legend" data-i18n="settings.postProcess">settings.postProcess</legend>
 
       <div class="homey-form-group">
-        <p data-i18n="settings.prefixHelp" class="homey-form-label"></p>
-        <label class="homey-form-label" for="prefix" data-i18n="settings.prefix">prefix</label>
-        <input class="homey-form-input" id="prefix" type="text" value="" />
+        <label class="homey-form-label" for="maxWait"><span data-i18n="settings.maxWait">maxWait</span> <div class="hintButton" onclick="toggle(this,'maxWaitHint');return false;">i</div></label>
+        <input class="homey-form-input" id="maxWait" type="number" value="300" min="2" max="1000" step="1" onchange="limitElement(this);"/>
+        <p class="hint" id="maxWaitHint" data-i18n="settings.maxWaitHelp" class="homey-form-label">settings.maxWaitHelp</p>
       </div>
 
       <div class="homey-form-group">
-        <p data-i18n="settings.splitHelp" class="homey-form-label"></p>
-        <label class="homey-form-label" for="split" data-i18n="settings.split">split</label>
+        <label class="homey-form-label" for="maxLength"><span data-i18n="settings.maxLength">maxLength</span> <div class="hintButton" onclick="toggle(this,'maxLengthHint');return false;">i</div></label>
+        <input class="homey-form-input" id="maxLength" type="number" value="4000" min="100" max="4500" step="1" onchange="limitElement(this);"/>
+        <p class="hint" id="maxLengthHint" data-i18n="settings.maxLengthHelp" class="homey-form-label">settings.maxLengthHelp</p>
+      </div>
+
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="split"><span data-i18n="settings.split">split</span> <div class="hintButton" onclick="toggle(this,'splitHint');return false;">i</div></label>
         <input class="homey-form-input" id="split" type="number" value="200" min="10" max="1000" step="1" onchange="limitElement(this);"/>
+        <p class="hint" id="splitHint" data-i18n="settings.splitHelp" class="homey-form-label">settings.splitHelp</p>
       </div>
     </fieldset>
 
     <button id="save" class="homey-button-primary-full" data-i18n="settings.save">Save changes</button>
+    </div>
+
+    <!-- Status Page -->
+    <style>
+      textarea {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 100%;
+      }
+    </style>
+    <div class="tab" id="statusPage" style="display:none;">
+      <button id="refresh" class="homey-button-primary-full" data-i18n="settings.refresh">Refresh</button>
+      <p><label class="homey-form-label" for="status" data-i18n="log.status">log.status</label> <span id="logStatus">log.status</span></p>
+
+
+      <label class="homey-form-label" for="logIn" data-i18n="log.logIn">log.logIn</label>
+      <textarea id="logIn" type="number" value="200" min="10" max="1000" step="1" width="100%" rows="10">Blah</textarea>
+
+      <label class="homey-form-label" for="logOut" data-i18n="log.logOut">log.logOut</label>
+      <textarea id="logOut" type="number" value="200" min="10" max="1000" step="1" width="100%" rows="10">Blah</textarea>
+
+      <label class="homey-form-label" for="queue" data-i18n="log.queue">log.queue</label>
+      <textarea id="logQueue" type="number" value="200" min="10" max="1000" step="1" width="100%" rows="10">Blah</textarea>
+    </div>
 
     <hr>
-    <a href="https://homey.app/a/no.sparegris"><img id="piggy_ad" src="piggy_en.png" width="100%"></a>
+    <a href="https://homey.app/a/no.sparegris"><img style="border: 1px solid black; " id="piggy_ad" src="piggy_en.png" width="100%"></a>
     <hr>
 
     <script type="text/javascript">
@@ -88,7 +207,13 @@
       function onHomeyReady(Homey) {
 
         piggyElem = document.getElementById("piggy_ad").src = Homey.__("settings.piggyImg");
-        
+
+        // Log dynamic update:
+        Homey.on('logStatus', log => { document.getElementById("logStatus").innerHTML = log; });
+        Homey.on('logIn', log => { document.getElementById("logIn").value = log; });
+        Homey.on('logOut', log => { document.getElementById("logOut").value = log; });
+        Homey.on('logQueue', log => { document.getElementById("logQueue").value = log; });
+
         var APIKeyElement = document.getElementById("APIKey");
         var engineElement = document.getElementById("engine");
         var maxWaitElement = document.getElementById("maxWait");
@@ -97,6 +222,7 @@
         var prefixElement = document.getElementById("prefix");
         var splitElement = document.getElementById("split");
         var saveElement = document.getElementById("save");
+        var refreshElement = document.getElementById("refresh");
 
         Homey.get("APIKey", function (err, APIKey) {
           if (err) return Homey.alert(err);
@@ -157,7 +283,19 @@
           });
         });
 
+        refreshElement.addEventListener("click", function (e) {
+          document.getElementById("logStatus").innerHTML = 'Waiting for refresh...'
+          Homey.api('GET', '/updateLog', null, (err, result) => {
+            if (err) return Homey.alert(err);
+          });
+        });
+
+        // Start updating log
+        Homey.api('GET', '/updateLog', null, (err, result) => {
+          if (err) return Homey.alert(err);
+        });
         // Tell Homey we're ready to be displayed
+        changePage('settings');
         Homey.ready();
       }
     </script>
