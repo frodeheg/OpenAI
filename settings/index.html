@@ -365,7 +365,7 @@
         Homey.get("webhook", function (err, webhook) {
           if (err) return Homey.alert(err);
           webhookElement.value = webhook;
-        })
+        });
 
         saveElement.addEventListener("click", function (e) {
           Homey.set("APIKey", APIKeyElement.value, function (err) {
