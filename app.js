@@ -197,7 +197,7 @@ class MyApp extends Homey.App {
         this.tokenQueue = [];
       }
       this.prevTime = now;
-      this.prompt += question;
+      this.prompt += ` ${question}`; // Add space because ChatGpt may have missed one.
       if (this.prompt.length > this.maxLength) {
         this.log(`Forgetting what was before ${this.maxLength} characters ago`);
         this.prompt = this.prompt.substr(-(this.maxLength - pendingText.length));
