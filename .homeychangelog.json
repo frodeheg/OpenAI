@@ -40,5 +40,8 @@
   },
   "1.1.4": {
     "en": "Added logging interface to the setup screen."
+  },
+  "1.1.5": {
+    "en": "Added webhook as alternative input + Added help screen."
   }
 }
