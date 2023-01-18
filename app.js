@@ -110,6 +110,49 @@ class MyApp extends Homey.App {
       this.canSendToken = true;
       return this.sendToken();
     });
+
+    // Webhooks
+    const webhookId = Homey.env.WEBHOOK_ID;
+    const webhookSecret = Homey.env.WEBHOOK_SECRET;
+    const homeyId = await this.homey.cloud.getHomeyId();
+    const data = {
+      // Provide unique properties for this Homey here
+      deviceId: `${homeyId}`,
+    };
+    const webhook = `https://webhooks.athom.com/webhook/63c484ce5081010bae97f67e?homey=${homeyId}\&message=something`;
+    console.log(`Webhook address: ${webhook}`);
+    this.homey.settings.set('webhook', webhook);
+    const myWebhook = await this.homey.cloud.createWebhook(webhookId, webhookSecret, data);
+
+    myWebhook.on('message', (args) => {
+      this.log('Got a webhook message!');
+      this.log('headers:', args.headers);
+      this.log('query:', args.query);
+
+      let message = '';
+      try {
+        const list = args.body['From SRS0'].split('\n');
+        let subject = '';
+        let message0 = '';
+        let breaksFound = 0;
+        for (let i = 0; i < list.length; i++) {
+          breaksFound += list[i] === '';
+          if ((breaksFound === 0) && list[i].startsWith('Subject: ')) subject = list[i].substring(9);
+          if (breaksFound === 1) message0 += list[i];
+          if (breaksFound === 2) message += list[i];
+        }
+        if (message === '') message = message0; // Very simplified for 'if the message was not multipart then pick the first part'
+        this.log('subject:', subject);
+      } catch (err) {
+        message = args.query.message;
+      }
+      this.log('message:', message);
+      if (message) {
+        this.askQuestion(message);
+      } else {
+        this.log('body', args.body);
+      }
+    });
   }
 
   splitIntoSubstrings(str, maxLength) {

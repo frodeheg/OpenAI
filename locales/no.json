@@ -16,12 +16,13 @@
     "temperature": "Temperatur",
     "temperatureHelp": "Hvilken samplingstemperatur som skal brukes. Høyere verdier betyr at modellen vil ta mer risiko. Prøv 0,9 for mer kreativt output, og 0 for et veldefinert svar.",
     "prefix": "Spørsmålsprefix",
-    "prefixHelp": "Spørsmålsprefikset er for å gi ChatGPT litt kontekst for å kunne svare på ukjente spørsmål, stille inn språket og aktivere moderering. Vær oppmerksom på at hvis du fjerner modereringsforespørselen i dette prefikset, kan svarene bryte OpenAI-retningslinjene og kontoen din kan bli suspendert.",
+    "prefixHelp": "Spørsmålsprefikset er for å gi ChatGPT litt kontekst for å kunne svare på ukjente spørsmål, stille inn språket og aktivere moderering. Vær oppmerksom på at hvis du fjerner modereringsforespørselen i dette prefikset, kan svarene bryte OpenAI-retningslinjene.",
     "split": "Tekstoppdeling",
     "splitHelp": "Dersom teksten er veldig lang vil den bli delt opp i mindre enheter med valgt lengde. Dette er fordi mange tekst-til-tale enheter har en maks tekstlengde på rundt 200 bokstaver.",
     "defaultPrefix": "Alle spørsmål må besvares på en hyggelig og moderert måte. ",
     "save": "Lagre endringer",
-    "piggyImg": "piggy_no.png"
+    "help": "Hjelp",
+    "lang": "no"
   },
   "log": {
     "title": "Logg",
@@ -29,5 +30,36 @@
     "logIn": "Siste Input",
     "logOut": "Siste Output",
     "queue": "Kø"
+  },
+  "help": {
+    "awareTitle": "Ting å være oppmerksom på",
+    "aware1": "ChatGPT svarer med en hastighet som ligner på tale, noe som betyr at hele svaret kanskje ikke kommer før om veldig lenge.",
+    "aware2": "Tekst-til-tale-grensesnitt har vanligvis en maksimal grense på tekstlengde rundt 200 tegn, noe som kan resultere i at talen forsvinner om lengden overskrides.",
+    "aware3": "Bruk av delvise svar vil løse begge disse problemene for deg, siden de både er responsive og begrenset i lengde. Hvis du bruker fullstendige svar, må du håndtere disse problemene selv.",
+    "use": "Anbefalt bruk",
+    "use1": "Dette eksemplet vil begynne å behandle svar like raskt som de ankommer ved å sende dem til Homeys tekst-til-tale-grensesnitt. Merk at når tekst-til-tale-kommandoen har fullført samtalen, vil en forespørsel etter neste delvise svar sendes. Med mindre dette utløses, vil hele prosessen stoppe ettersom utdataene fra ChatGPT holdes i utdatakøen for appen.",
+    "use2": "Dette eksemplet vil, etter den valgte triggerhendelsen, sende et spørsmål til ChatGPT. Det vil ikke være noen venting, men i stedet utløse den delvise responsen i forrige eksempel.",
+    "badUse": "Frarådet bruk",
+    "badUse1": "Å bruke noen av flytkortene som vil gi deg fulle svar vil bety mye venting hvis du ber om noe stort som et eventyr. Vær oppmerksom på dette når du setter opp flytene.",
+    "conversation": "Samtaler",
+    "conversation1": "For å tillate samtaler, beholdes all kommunikasjon med ChatGPT i 10 minutter. Hvis du fortsetter samtalen innen denne tidsrammen, vil det bli lagt til den forrige konteksten og som sådan vil svarene bli farget av dette. Etter 10 minutter uten aktivitet, blir hele konteksten glemt. Vær oppmerksom på at alle kontekster starter med prefikset i innstillingene.",
+    "other": "Andre inngangskilder",
+    "other1": "For å lette integrasjonen med tale-til-tekst-motorer eksponerer denne appen også en alternativ inngangskilde for flyter. Hvis du bruker følgende web-hook, kan du legge inn spørsmål til ChatGPT derifra også:",
+    "other2": "Input til webhook kan legges inn på to måter:",
+    "other3": "Som parameteren '<code>message</code>': Legg til <code>&message=Et spørsmål til chatboten</code>",
+    "other4": "Som POST-melding: I form av en videresendt e-post.",
+    "other5": "Eksempler på bruk av webhook kan være:",
+    "apple": "Apple Siri",
+    "apple1": "Ved å lage en 'Snarveisautomatisering' som peker til webkroken",
+    "apple2": "Se her for detaljer - YouTube",
+    "google": "Google-assistent",
+    "google1": "Ved å lage en 'Rutine' under 'Assistent-innstillinger'",
+    "google2": "Hvis rutinen heter 'Chatbot', kan du starte den med 'Hey Google, Chatbot'",
+    "google3": "Rutinen kan da inneholde én handling 'Send e-post til xxxx' der xxxx er en kontakt du opprettet for dette formålet",
+    "google4": "I e-postserveren for adressen ovenfor, hvis støttet, velg å videresende all e-post til et program",
+    "google5": "Følgende program vil sende eposten til webhooken:",
+    "error": "Feilhåndtering",
+    "error1": "Hvis chatboten er overbelastet eller av andre grunner ikke kan svare, vil det oppstå en feil. Feilkoden returneres som en del av svaret for å gjøre deg oppmerksom på feilen.",
+    "error2": "Se her for en detaljert liste over feilkoder:"
   }
 }

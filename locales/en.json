@@ -16,12 +16,13 @@
     "temperature": "Temperature",
     "temperatureHelp": "What sampling temperature to use. Higher values means the model will take more risks. Try 0.9 for more creative output, and 0 for well-defined answers.",
     "prefix": "Question prefix",
-    "prefixHelp": "The question prefix is to give ChatGPT some context to be able to answer unknown questions, set the language and to enable moderation. Please be aware that if you remove the moderation request in this prefix the answers may violate the OpenAI policy and your account may be suspended.",
+    "prefixHelp": "The question prefix is to give ChatGPT some context to be able to answer unknown questions, set the language and to enable moderation. Please be aware that if you remove the moderation request in this prefix the answers may violate the OpenAI policy.",
     "split": "Split text",
     "splitHelp": "If the text is very long it will be divided into responses with the selected length. This is because text-to-speach devices usually have a text limit around 200 characters",
     "defaultPrefix": "All questions must be answered in a pleasant and moderated manner. ",
     "save": "Save changes",
-    "piggyImg": "piggy_en.png"
+    "help": "Help",
+    "lang": "en"
   },
   "log": {
     "title": "Log",
@@ -29,5 +30,36 @@
     "logIn": "Last Input",
     "logOut": "Last Output",
     "queue": "Queue"
+  },
+  "help": {
+    "awareTitle": "Things to be aware of",
+    "aware1": "ChatGPT responds at a rate similar to speech, which means that the full response may not arrive before a very long time.",
+    "aware2": "Text-to-speech interfaces usually have a maximum limit for text input to be around 200 characters. Anything longer may result in no sound at all.",
+    "aware3": "Using partial answers will solve both of these issues for you as they are both responsive and limited in length. If you're using full answers you will have to deal with these issues yourself.",
+    "use": "Recommended use",
+    "use1": "This example will start processing responses as fast as they arrive by sending them to the Homey text-to-speech interface. Note that when the text-to-speech command has completed talking, a request for the next partial response is sent. Unless this is triggered the entire process will be stalled as the output from ChatGPT will be kept in the output Queue for the app.",
+    "use2": "This example will, after the selected trigger event, send a question to ChatGPT. There will be no waiting, but instead, trigger the partial response in the previous example.",
+    "badUse": "Discouraged use",
+    "badUse1": "Using any of the flow cards that will give you full responses will mean a lot of waiting if you're asking for something big like a fairytale. Please be aware of this when setting up the flows.",
+    "conversation": "Conversations",
+    "conversation1": "In order to allow conversations, all communication with ChatGPT is kept for 10 minutes. If you input anything within this timeframe then it will be appended to the previous context and as such the responses will be coloured by this. After 10 minutes without any activity, the entire context is forgotten. Note that all contexts are prepended with the prefix in the settings.",
+    "other": "Other inputs sources",
+    "other1": "In order to ease integration with speech-to-text engines this app also exposes an alternative input source to flows. If you use the following web hook you may input questions to that as well:",
+    "other2": "The input to the webhook can be entered in two ways:",
+    "other3": "As the parameter '<code>message</code>': Just append <code>&message=A question for the chatbot</code>",
+    "other4": "As a POST message: In form of a forwarded mail.",
+    "other5": "Examples of using the webhook could be:",
+    "apple": "Apple Siri",
+    "apple1": "By creating a 'Shortcut automation' that points to the webhook",
+    "apple2": "See here for details - YouTube",
+    "google": "Google assistant",
+    "google1": "By creating a 'Routine' under 'Assistant settings'",
+    "google2": "If the routine is named 'Chatbot' you can start it with 'Hey Google, Chatbot'",
+    "google3": "The routine can then contain one action 'Send email to xxxx' where xxxx is a contact you created for this purpose",
+    "google4": "In the mail server for the address above, if supported, select it to forward all mails to a program",
+    "google5": "The following program will send it to the webhook:",
+    "error": "Error handling",
+    "error1": "If the chatbot is overloaded or for other reasons can't respond there will be an error. The error code is returned as part of the answer to make you aware of the fault.",
+    "error2": "See here for a detailed list of error codes:"
   }
 }

@@ -14,6 +14,7 @@
           }
         }
       }
+      var language = 'en';
     </script>
   </head>
   <body style="background:#E0E0E8;">
@@ -43,7 +44,31 @@
         display:none;
       }
 
-      .tabSelector {
+      .tab {
+        background: #F5F5FC;
+        border-right: 1px solid black;
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+        padding:10px;
+        box-shadow: 8px 10px 5px 2px gray;
+        position: relative;
+        z-index: 10;
+      }
+
+      .menu {
+        position: relative;
+        z-index: 1;
+        font-weight: bold;
+        font-size: 6vmin;
+        border-bottom: 1px solid black;
+      }
+      .menuspacer {
+        margin-bottom: 1px;
+        padding: 10px;
+      }
+      .menuitem {
+        position: absolute;
+        top: 0;
         border-right: 1px solid black;
         border-left: 1px solid black;
         border-top: 1px solid black;
@@ -54,33 +79,47 @@
         box-shadow: 8px 10px 5px 2px gray;
 
         text-shadow: 1px 1px 2px white, 0 0 5px gray;
+        text-align: center;
       }
-      .tabBetween {
-        border-bottom: 1px solid black;
+      .item-1 {
+        left: 0;
       }
-      .tab {
-        background: #F5F5FC;
-        border-right: 1px solid black;
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        padding:10px;
-        box-shadow: 8px 10px 5px 2px gray;
+      .item-2 {
+        left: 60%;
+        transform: translateX(-50%);
+      }
+      .item-3 {
+        left: 100%;
+        transform: translateX(-100%);
       }
     </style>
 
     <script type="text/javascript">
       function changePage(newPage) {
+        // Buttons pos
+        document.getElementById('settingsButton').style.top = '0px';
+        document.getElementById('statusButton').style.top = '0px';
+        document.getElementById('helpButton').style.top = '0px';
+        document.getElementById(`${newPage}Button`).style.top = '5px';
+        // Buttons z-index
+        document.getElementById('settingsButton').style.zIndex = 10;
+        document.getElementById('statusButton').style.zIndex = 10;
+        document.getElementById('helpButton').style.zIndex = 10;
+        document.getElementById(`${newPage}Button`).style.zIndex = 20;
         // Buttons flip
         document.getElementById('settingsButton').style.background = '#BBBBBB';
         document.getElementById('statusButton').style.background = '#BBBBBB';
+        document.getElementById('helpButton').style.background = '#BBBBBB';
         document.getElementById(`${newPage}Button`).style.background = '#F5F5FC';
         // Buttons lower
         document.getElementById('settingsButton').style.borderBottom = '1px solid black';
         document.getElementById('statusButton').style.borderBottom = '1px solid black';
-        document.getElementById(`${newPage}Button`).style.borderBottom = '0px solid black';
+        document.getElementById('helpButton').style.borderBottom = '1px solid black';
+        document.getElementById(`${newPage}Button`).style.borderBottom = '1px solid #F5F5FC';
         // Page flip
         document.getElementById('settingsPage').style.display = 'none';
         document.getElementById('statusPage').style.display = 'none';
+        document.getElementById('helpPage').style.display = 'none';
         document.getElementById(`${newPage}Page`).style.display = 'block';
       }
 
@@ -100,14 +139,13 @@
     </script>
       
     <!-- Menu -->
-    <table width="100%" style="padding:0px; border-spacing:0px;">
-      <tr style="text-align: center; font-weight: bold; font-size: 1.5em;">
-        <td class="tabSelector" id="settingsButton" width="45%" onclick="changePage('settings');" data-i18n="settings.title">settings.title</td>
-        <td class="tabBetween" width="10%">&nbsp;</td>
-        <td class="tabSelector" id="statusButton" width="45%" onclick="changePage('status');" data-i18n="log.title">log.title</td>
-      </tr>
-    </table>
-
+    <div class="menu">
+      <div class="menuspacer">&nbsp;</div>
+      <div id="settingsButton" onclick="changePage('settings');" class="menuitem item-1" data-i18n="settings.title">settings.title</div>
+      <div id="statusButton" onclick="changePage('status');" class="menuitem item-2" data-i18n="log.title">log.title</div>
+      <div id="helpButton" onclick="changePage('help');" class="menuitem item-3" data-i18n="settings.help">settings.help</div>
+    </div>
+ 
     <!-- Settings page -->
     <div class="tab" id="settingsPage">
     <!--<h1 class="homey-title" data-i18n="settings.title">settings.title</h1>-->
@@ -189,13 +227,73 @@
 
 
       <label class="homey-form-label" for="logIn" data-i18n="log.logIn">log.logIn</label>
-      <textarea id="logIn" type="number" value="200" min="10" max="1000" step="1" width="100%" rows="10">Blah</textarea>
+      <textarea id="logIn" type="number" value="200" min="10" max="1000" step="1" width="100%" rows="10"></textarea>
 
       <label class="homey-form-label" for="logOut" data-i18n="log.logOut">log.logOut</label>
-      <textarea id="logOut" type="number" value="200" min="10" max="1000" step="1" width="100%" rows="10">Blah</textarea>
+      <textarea id="logOut" type="number" value="200" min="10" max="1000" step="1" width="100%" rows="10"></textarea>
 
       <label class="homey-form-label" for="queue" data-i18n="log.queue">log.queue</label>
-      <textarea id="logQueue" type="number" value="200" min="10" max="1000" step="1" width="100%" rows="10">Blah</textarea>
+      <textarea id="logQueue" type="number" value="200" min="10" max="1000" step="1" width="100%" rows="10"></textarea>
+    </div>
+
+    <!-- Help Page -->
+    <div class="tab" id="helpPage" style="display:none;">
+      <legend class="homey-form-legend" data-i18n="help.awareTitle"></legend>
+      <ul>
+        <li data-i18n="help.aware1"></li>
+        <li data-i18n="help.aware2"></li>
+      </ul>
+      <p data-i18n="help.aware3"></p>
+
+      <legend class="homey-form-legend" data-i18n="help.use"></legend>
+      <img id="useImg" width="100%" src="reccomended_en.png"><br>
+      <p data-i18n="help.use1"></p>
+
+      <img id="askImg" width="100%" src="ask_en.png"><br>
+      <p data-i18n="help.use2"></p>
+
+      <legend class="homey-form-legend" data-i18n="help.badUse"></legend>
+      <p data-i18n="help.badUse1"></p>
+
+      <legend class="homey-form-legend" data-i18n="help.conversation"></legend>
+      <p data-i18n="help.conversation1"></p>
+
+      <legend class="homey-form-legend" data-i18n="help.other"></legend>
+      <p data-i18n="help.other1"></p>
+
+      <input id="webhook" type="text" class="homey-form-input" value="...Please wait for webhook to be inserted, or refresh the page if it's not here...">
+
+      <p data-i18n="help.other2"></p>
+      <ul>
+        <li data-i18n="help.other3"></li>
+        <li data-i18n="help.other4"></li>
+      </ul>
+
+      <p data-i18n="help.other5"></p>
+      <ul>
+        <li><div data-i18n="help.apple"></div>
+          <ul>
+            <li><div data-i18n="help.apple1"></div>
+              <a data-i18n="help.apple2" href="https://www.youtube.com/watch?v=33fwHmQclDI"></a>
+            </li>
+          </ul>
+        </li>
+        <li><div data-i18n="help.google"></div>
+          <ul>
+            <li data-i18n="help.google1"></li>
+            <li data-i18n="help.google2"></li>
+            <li data-i18n="help.google3"></li>
+            <li data-i18n="help.google4"></li>
+            <li><div data-i18n="help.google5"></div><br>
+              <input type="text" value='curl -s -o /dev/null -H "Content-Type\:text/html" -X POST --data-binary @- REPLACE_WITH_YOUR_WEBHOOK'>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <legend class="homey-form-legend" data-i18n="help.error"></legend>
+      <p data-i18n="help.error1"></p>
+      <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes"><div data-i18n="help.error2"></div></a>
     </div>
 
     <hr>
@@ -206,7 +304,11 @@
       // a method named 'onHomeyReady' must be present in your code
       function onHomeyReady(Homey) {
 
-        piggyElem = document.getElementById("piggy_ad").src = Homey.__("settings.piggyImg");
+        // Update images
+        language = Homey.__('settings.lang');
+        document.getElementById("askImg").src = `ask_${language}.png`;
+        document.getElementById("useImg").src = `reccomended_${language}.png`;
+        document.getElementById("piggy_ad").src = `piggy_${language}.png`;
 
         // Log dynamic update:
         Homey.on('logStatus', log => { document.getElementById("logStatus").innerHTML = log; });
@@ -223,6 +325,7 @@
         var splitElement = document.getElementById("split");
         var saveElement = document.getElementById("save");
         var refreshElement = document.getElementById("refresh");
+        var webhookElement = document.getElementById("webhook")
 
         Homey.get("APIKey", function (err, APIKey) {
           if (err) return Homey.alert(err);
@@ -258,6 +361,11 @@
           if (err) return Homey.alert(err);
           splitElement.value = split;
         });
+
+        Homey.get("webhook", function (err, webhook) {
+          if (err) return Homey.alert(err);
+          webhookElement.value = webhook;
+        })
 
         saveElement.addEventListener("click", function (e) {
           Homey.set("APIKey", APIKeyElement.value, function (err) {
