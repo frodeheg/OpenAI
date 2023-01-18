@@ -43,5 +43,8 @@
   },
   "1.1.5": {
     "en": "Added webhook as alternative input + Added help screen."
+  },
+  "1.1.6": {
+    "en": "Fixed some issues with the images that caused the app settings to reset all the time."
   }
 }
