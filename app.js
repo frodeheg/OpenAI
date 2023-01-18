@@ -282,7 +282,7 @@ class MyApp extends Homey.App {
       this.log(`  temperature: ${this.temperature}`);
       this.log(`  user:        ${this.randomName}`);
       this.log(`  prompt: ${this.prompt + pendingText}`);
-      this.log('Error text:');
+      this.log('Error text: ');
       this.log(`  ${err}`);
       await this.sendToken(errText);
       const completeToken = { ChatGPT_FullResponse: errText };
