@@ -71,9 +71,12 @@ class MyApp extends Homey.App {
 
     this.homey.settings.on('set', (setting) => {
       if (setting === 'APIKey') {
+        delete this.openai;
+        delete this.configuration;
         this.configuration = new Configuration({
           apiKey: this.homey.settings.get('APIKey'),
         });
+        this.openai = new OpenAIApi(this.configuration);
       }
       this.engine = this.homey.settings.get('engine');
       this.maxWait = this.homey.settings.get('maxWait');
