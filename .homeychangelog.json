@@ -46,5 +46,8 @@
   },
   "1.1.6": {
     "en": "Fixed some issues with the images that caused the app settings to reset all the time."
+  },
+  "1.1.7": {
+    "en": "No changes"
   }
 }
