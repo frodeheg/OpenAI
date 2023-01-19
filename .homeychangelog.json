@@ -58,5 +58,8 @@
   },
   "1.2.1": {
     "en": "Fixed some minor issues when refreshing the log page."
+  },
+  "1.3.0": {
+    "en": "Added a flow that triggers by the webhook instead of triggering chatGPT directly when the webhook is triggered."
   }
 }
