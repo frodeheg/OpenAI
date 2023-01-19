@@ -55,5 +55,8 @@
   },
   "1.2.0": {
     "en": "Added DALL·E support"
+  },
+  "1.2.1": {
+    "en": "Fixed some minor issues when refreshing the log page."
   }
 }
