@@ -1,0 +1,41 @@
+{
+  "title": {
+    "en": "A webhook triggered",
+    "no": "En webhook ble utløst"
+  },
+  "titleFormatted": {
+    "en": "A webhook triggered with flag [[flag]] and message [[message]]",
+    "no": "En webhook ble utløst med flag [[flag]] og beskjed [[message]]"
+  },
+  "hint": {
+    "en": "Use webhooks to allow for other input sources to this app. See the app settings help section to see what the webhook address is. If you add a flag then you can for example use it to choose whether or not to forward the text to image generation or to ChatGPT",
+    "no": "Bruk en webhook for å tillate andre input-kilder til denne appen. Se i appens instillinger under hjelp for å se hva webhook adressen er. Legger du ved et flagg kan du for eksempel bruke det for å velge om det skal genereres bilde eller sende tekst til ChatGPT."
+  },
+  "highlight": true,
+  "tokens": [
+    {
+      "name": "flag",
+      "type": "string",
+      "title": {
+        "en": "Flag",
+        "no": "Flagg"
+      },
+      "example": {
+        "en": "The flag is a custom identifier appended to the webhook address with &flag=nnnn",
+        "no": "Flagget er en valgfri identifakor som legges til webhook-adressen med &flag=nnnn"
+      }
+    },
+    {
+      "name": "message",
+      "type": "string",
+      "title": {
+        "en": "Message",
+        "no": "Beskjed"
+      },
+      "example": {
+        "en": "The message is sent to the webhook either with &message=nnnn or in POST form as a forwarded mail.",
+        "no": "Beskjeden sendes enten til webhooken med &message=nnnn eller med POST i form av en videresendt epost."
+      }
+    }
+  ]
+}

@@ -145,7 +145,7 @@ class MyApp extends Homey.App {
       // Provide unique properties for this Homey here
       deviceId: `${homeyId}`,
     };
-    const webhook = `https://webhooks.athom.com/webhook/63c484ce5081010bae97f67e?homey=${homeyId}\&message=something`;
+    const webhook = `https://webhooks.athom.com/webhook/63c484ce5081010bae97f67e?homey=${homeyId}&message=something&flag=something`;
     console.log(`Webhook address: ${webhook}`);
     this.homey.settings.set('webhook', webhook);
     const myWebhook = await this.homey.cloud.createWebhook(webhookId, webhookSecret, data);
@@ -174,7 +174,14 @@ class MyApp extends Homey.App {
       }
       this.log('message:', message);
       if (message) {
-        this.askQuestion(message);
+        const flag = args.query.flag ? args.query.flag : '';
+        this.log(`Flag: ${flag}`);
+        const webhookToken = {
+          flag,
+          message,
+        };
+        const webhookTrigger = this.homey.flow.getTriggerCard('webhook-triggered');
+        webhookTrigger.trigger(webhookToken);
       } else {
         this.log('body', args.body);
       }
