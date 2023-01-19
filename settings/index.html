@@ -397,10 +397,10 @@
 
         refreshElement.addEventListener("click", function (e) {
           document.getElementById("logStatus").innerHTML = 'Waiting for refresh...'
-          document.getElementById("logIn").innerHTML = 'Waiting for refresh...'
-          document.getElementById("logOut").innerHTML = 'Waiting for refresh...'
-          document.getElementById("logQueue").innerHTML = 'Waiting for refresh...'
-          document.getElementById("logImage").innerHTML = 'Waiting for refresh...'
+          document.getElementById("logIn").value = 'Waiting for refresh...'
+          document.getElementById("logOut").value = 'Waiting for refresh...'
+          document.getElementById("logQueue").value = 'Waiting for refresh...'
+          document.getElementById("logImage").value = 'Waiting for refresh...'
           Homey.api('GET', '/updateLog', null, (err, result) => {
             if (err) return Homey.alert(err);
           });
