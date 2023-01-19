@@ -227,13 +227,16 @@
 
 
       <label class="homey-form-label" for="logIn" data-i18n="log.logIn">log.logIn</label>
-      <textarea id="logIn" type="number" value="200" min="10" max="1000" step="1" width="100%" rows="10"></textarea>
+      <textarea id="logIn" rows="10"></textarea>
 
       <label class="homey-form-label" for="logOut" data-i18n="log.logOut">log.logOut</label>
-      <textarea id="logOut" type="number" value="200" min="10" max="1000" step="1" width="100%" rows="10"></textarea>
+      <textarea id="logOut" rows="10"></textarea>
 
-      <label class="homey-form-label" for="queue" data-i18n="log.queue">log.queue</label>
-      <textarea id="logQueue" type="number" value="200" min="10" max="1000" step="1" width="100%" rows="10"></textarea>
+      <label class="homey-form-label" for="logQueue" data-i18n="log.queue">log.queue</label>
+      <textarea id="logQueue" rows="10"></textarea>
+
+      <label class="homey-form-label" for="logImage" data-i18n="log.image">log.image</label>
+      <input id="logImage" type="text" class="homey-form-input" value="">
     </div>
 
     <!-- Help Page -->
@@ -315,6 +318,7 @@
         Homey.on('logIn', log => { document.getElementById("logIn").value = log; });
         Homey.on('logOut', log => { document.getElementById("logOut").value = log; });
         Homey.on('logQueue', log => { document.getElementById("logQueue").value = log; });
+        Homey.on('logImage', log => { document.getElementById("logImage").value = log; });
 
         var APIKeyElement = document.getElementById("APIKey");
         var engineElement = document.getElementById("engine");
@@ -393,6 +397,10 @@
 
         refreshElement.addEventListener("click", function (e) {
           document.getElementById("logStatus").innerHTML = 'Waiting for refresh...'
+          document.getElementById("logIn").innerHTML = 'Waiting for refresh...'
+          document.getElementById("logOut").innerHTML = 'Waiting for refresh...'
+          document.getElementById("logQueue").innerHTML = 'Waiting for refresh...'
+          document.getElementById("logImage").innerHTML = 'Waiting for refresh...'
           Homey.api('GET', '/updateLog', null, (err, result) => {
             if (err) return Homey.alert(err);
           });

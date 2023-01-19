@@ -1,0 +1,51 @@
+{
+  "title": {
+    "en": "Generate an image from a text string and return it",
+    "no": "Lag et bilde fra en tekst og returner det"
+  },
+  "titleFormatted": {
+    "en": "Generate an image of size [[size]] from the text [[description]] and return it",
+    "no": "Lag et bilde med størrelse [[size]] fra teksten [[description]] og returner det"
+  },
+  "hint": {
+    "en": "Uses DALL·E to generate images according to your description.",
+    "no": "Bruk DALL·E for å generere bilder i henhold til den gitte beskrivelsen"
+  },
+  "args": [
+    {
+      "type": "dropdown",
+      "name": "size",
+      "title": {
+        "en": "Image Size",
+        "no": "Dimensjoner"
+      },
+      "values": [
+        { "id": "256", "label": { "en": "256x256" } },
+        { "id": "512", "label": { "en": "512x512" } },
+        { "id": "1024", "label": { "en": "1024x1024" } }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "description",
+      "placeholder": {
+        "en": "Description",
+        "no": "Beskrivelse"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "DALLE_Image",
+      "type": "image",
+      "title": {
+        "en": "DALL·E Image",
+        "no": "DALL·E Bilde"
+      },
+      "example": {
+        "en": "An image generated from the input text.",
+        "no": "Et bilde generert fra teksten som ble gitt som input."
+      }
+    }
+  ]
+}

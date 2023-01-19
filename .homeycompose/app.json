@@ -7,10 +7,11 @@
     "local"
   ],
   "name": {
-    "en": "OpenAI ChatGPT"
+    "en": "OpenAI"
   },
   "description": {
-    "en": "Let you interact with the OpenAI ChatGPT through Homey flows"
+    "en": "Interact with ChatGPT and generate images with DALL·E through flows.",
+    "no": "Snakk med ChatGPT og generer bilder med DALL·E ved hjelp av flows."
   },
   "category": [
     "internet"
@@ -43,7 +44,9 @@
     "en": [
       "OpenAI",
       "ChatGPT",
-      "text"
+      "text",
+      "DALLE",
+      "images"
     ]
   },
   "brandColor": "#050505",

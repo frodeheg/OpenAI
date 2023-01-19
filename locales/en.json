@@ -29,7 +29,8 @@
     "status": "Status",
     "logIn": "Last Input",
     "logOut": "Last Output",
-    "queue": "Queue"
+    "queue": "Queue",
+    "image": "Last image"
   },
   "help": {
     "awareTitle": "Things to be aware of",

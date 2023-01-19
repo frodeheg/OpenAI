@@ -107,6 +107,29 @@ class MyApp extends Homey.App {
     const askQuestionActionAdvanced = this.homey.flow.getActionCard('ask-chatgpt-a-question-advanced');
     askQuestionActionAdvanced.registerRunListener(async (args, state) => this.askQuestion(args.Question));
 
+    // Generate Image flowcard
+    const generateImageAction = this.homey.flow.getActionCard('generate-an-image');
+    generateImageAction.registerRunListener(async (args, state) => {
+      this.log(`Generate image of size ${args.size} from text ${args.description}`);
+
+      // Start Image generation:
+      const response = await this.openai.createImage({
+        prompt: args.description,
+        n: 1,
+        size: `${args.size}x${args.size}`,
+      });
+      const imageUrl = response.data.data[0].url;
+      this.log(`Got image: ${imageUrl}`);
+      this.__image = imageUrl;
+
+      const myImage = await this.homey.images.createImage();
+      myImage.setUrl(imageUrl);
+
+      return {
+        DALLE_Image: myImage,
+      };
+    });
+
     // Start next partial answer
     const flushQueueAction = this.homey.flow.getActionCard('flush-queue');
     flushQueueAction.registerRunListener(async (args, state) => {

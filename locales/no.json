@@ -29,7 +29,8 @@
     "status": "Status",
     "logIn": "Siste Input",
     "logOut": "Siste Output",
-    "queue": "Kø"
+    "queue": "Kø",
+    "image": "Siste Bilde"
   },
   "help": {
     "awareTitle": "Ting å være oppmerksom på",

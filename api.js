@@ -7,6 +7,7 @@ module.exports = {
     homey.api.realtime('logStatus', homey.app.__status);
     homey.api.realtime('logIn', homey.app.__input);
     homey.api.realtime('logOut', homey.app.__output);
+    homey.api.realtime('logImage', homey.app.__image);
 
     const { tokenQueue } = homey.app;
     let queueText = '';
