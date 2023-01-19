@@ -52,5 +52,8 @@
   },
   "1.1.8": {
     "en": "Fixed a bug where changing the API key required an app restart."
+  },
+  "1.2.0": {
+    "en": "Added DALL·E support"
   }
 }
