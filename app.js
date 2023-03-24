@@ -148,44 +148,55 @@ class MyApp extends Homey.App {
     const webhook = `https://webhooks.athom.com/webhook/63c484ce5081010bae97f67e?homey=${homeyId}&message=something&flag=something`;
     console.log(`Webhook address: ${webhook}`);
     this.homey.settings.set('webhook', webhook);
-    const myWebhook = await this.homey.cloud.createWebhook(webhookId, webhookSecret, data);
-
-    myWebhook.on('message', (args) => {
-      this.log('Got a webhook message!');
-      this.log('headers:', args.headers);
-      this.log('query:', args.query);
-
-      let message = '';
+    let retryCount = 10;
+    while (retryCount > 0) {
       try {
-        const list = args.body['From SRS0'].split('\n');
-        let subject = '';
-        let message0 = '';
-        let breaksFound = 0;
-        for (let i = 0; i < list.length; i++) {
-          breaksFound += list[i] === '';
-          if ((breaksFound === 0) && list[i].startsWith('Subject: ')) subject = list[i].substring(9);
-          if (breaksFound === 1) message0 += list[i];
-          if (breaksFound === 2) message += list[i];
-        }
-        if (message === '') message = message0; // Very simplified for 'if the message was not multipart then pick the first part'
-        this.log('subject:', subject);
+        const myWebhook = await this.homey.cloud.createWebhook(webhookId, webhookSecret, data);
+
+        myWebhook.on('message', (args) => {
+          this.log('Got a webhook message!');
+          this.log('headers:', args.headers);
+          this.log('query:', args.query);
+
+          let message = '';
+          try {
+            const list = args.body['From SRS0'].split('\n');
+            let subject = '';
+            let message0 = '';
+            let breaksFound = 0;
+            for (let i = 0; i < list.length; i++) {
+              breaksFound += list[i] === '';
+              if ((breaksFound === 0) && list[i].startsWith('Subject: ')) subject = list[i].substring(9);
+              if (breaksFound === 1) message0 += list[i];
+              if (breaksFound === 2) message += list[i];
+            }
+            if (message === '') message = message0; // Very simplified for 'if the message was not multipart then pick the first part'
+            this.log('subject:', subject);
+          } catch (err) {
+            message = args.query.message;
+          }
+          this.log('message:', message);
+          if (message) {
+            const flag = args.query.flag ? args.query.flag : '';
+            this.log(`Flag: ${flag}`);
+            const webhookToken = {
+              flag,
+              message,
+            };
+            const webhookTrigger = this.homey.flow.getTriggerCard('webhook-triggered');
+            webhookTrigger.trigger(webhookToken);
+          } else {
+            this.log('body', args.body);
+          }
+        });
+        retryCount = 0;
       } catch (err) {
-        message = args.query.message;
+        if (retryCount === 1) {
+          throw new Error('Could not Initialize the webhook despite multiple attempts. Please restart the app');
+        }
+        retryCount--;
       }
-      this.log('message:', message);
-      if (message) {
-        const flag = args.query.flag ? args.query.flag : '';
-        this.log(`Flag: ${flag}`);
-        const webhookToken = {
-          flag,
-          message,
-        };
-        const webhookTrigger = this.homey.flow.getTriggerCard('webhook-triggered');
-        webhookTrigger.trigger(webhookToken);
-      } else {
-        this.log('body', args.body);
-      }
-    });
+    }
   }
 
   splitIntoSubstrings(str, maxLength) {
