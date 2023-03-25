@@ -162,8 +162,14 @@
 
       <div class="homey-form-group">
         <label class="homey-form-label" for="engine"><span data-i18n="settings.engine">engine</span> <div class="hintButton" onclick="toggle(this,'engineHint');return false;">i</div></label>
+        <!-- See https://platform.openai.com/docs/models/model-endpoint-compatibility for engines -->
         <select class="homey-form-select" id="engine">
-          <option value="text-davinci-003" selected>Davinci</option>
+          <!-- The ones below are for createChatCompletion -->
+          <option value="gpt-4">GPT-4</option>
+          <option value="gpt-4-32k">GPT-4-32k</option>
+          <option value="gpt-3.5-turbo" selected>GPT-3.5-turbo</option>
+          <!-- The ones below are for createCompletion -->
+          <option value="text-davinci-003">Davinci</option>
           <option value="text-curie-001">Curie</option>
           <option value="text-babbage-001">Babbage</option>
           <option value="text-ada-001">Ada</option>

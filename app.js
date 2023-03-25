@@ -10,6 +10,11 @@ function sleep(ms) {
 const STATUS_WAIT_RESPONE = 'Waiting for ChatGPT';
 const STATUS_WAIT_QUEUE = 'Queued output not requested';
 const STATUS_IDLE = 'Idle';
+const INTERFACE = {
+  COMPLETION: 1,
+  CHAT: 2,
+};
+
 class MyApp extends Homey.App {
 
   /**
@@ -30,9 +35,10 @@ class MyApp extends Homey.App {
     this.engine = this.homey.settings.get('engine');
     if (this.engine === null) {
       this.log('First time running so setting default engine');
-      this.engine = 'text-davinci-003';
+      this.engine = 'gpt-3.5-turbo';
       this.homey.settings.set('engine', this.engine);
     }
+    this.interface = this.checkInterface(this.engine);
 
     this.maxWait = this.homey.settings.get('maxWait');
     if (this.maxWait === null) {
@@ -79,6 +85,7 @@ class MyApp extends Homey.App {
         this.openai = new OpenAIApi(this.configuration);
       }
       this.engine = this.homey.settings.get('engine');
+      this.interface = this.checkInterface(this.engine);
       this.maxWait = this.homey.settings.get('maxWait');
       this.maxLength = this.homey.settings.get('maxLength');
       this.temperature = this.homey.settings.get('temperature');
@@ -87,6 +94,7 @@ class MyApp extends Homey.App {
     });
 
     this.prompt = this.prefix;
+    this.chat = [{ role: 'user', content: this.prefix }];
     this.ongoing = false;
     this.prevTime = new Date();
     this.tokenQueue = [];
@@ -217,6 +225,23 @@ class MyApp extends Homey.App {
     return substrings;
   }
 
+  checkInterface() {
+    switch (this.engine) {
+      case 'gpt-4':
+      case 'gpt-4-32k':
+      case 'gpt-3.5-turbo':
+        console.log(`Interface engine: ${this.engine}`);
+        return INTERFACE.CHAT;
+      case 'text-davinci-003':
+      case 'text-curie-001':
+      case 'text-babbage-001':
+      case 'text-ada-001':
+      default:
+        console.log(`Completion engine: ${this.engine}`);
+        return INTERFACE.COMPLETION;
+    }
+  }
+
   async askQuestion(question) {
     if (this.ongoing) {
       throw new Error('Still working on previous request');
@@ -237,32 +262,53 @@ class MyApp extends Homey.App {
         // Forget the conversation after 10 minutes
         this.log('Forgetting the conversation');
         this.prompt = this.prefix;
+        this.chat = [{ role: 'user', content: this.prefix }];
         this.canSendToken = true;
         this.tokenQueue = [];
       }
       this.prevTime = now;
       this.prompt += ` ${question}`; // Add space because ChatGpt may have missed one.
+      this.chat.push({ role: 'user', content: question });
       if (this.prompt.length > this.maxLength) {
         this.log(`Forgetting what was before ${this.maxLength} characters ago`);
         this.prompt = this.prompt.substr(-(this.maxLength - pendingText.length));
+        while (JSON.stringify(this.chat).length > this.maxLength) {
+          this.chat.shift();
+        }
       }
       let finished = false;
       const startTime = new Date(now.getTime() - 1000 * 2);
       let nRequests = 1;
       while (!finished) {
-        this.__input = this.prompt + pendingText;
         this.__status = STATUS_WAIT_RESPONE;
-        const completion = await this.openai.createCompletion({
-          model: this.engine,
-          prompt: this.__input,
-          temperature: +this.temperature,
-          user: this.randomName,
-          max_tokens: 40,
-        });
+        this.__input = this.prompt + pendingText;
+        let responseText;
+        let completion;
+        if (this.interface === INTERFACE.COMPLETION) {
+          completion = await this.openai.createCompletion({
+            model: this.engine,
+            prompt: this.__input,
+            temperature: +this.temperature,
+            user: this.randomName,
+            max_tokens: 40,
+          });
+          responseText = completion.data.choices[0].text;
+        } else { // this.interface === INTERFACE.CHAT
+          completion = await this.openai.createChatCompletion({
+            model: this.engine,
+            messages: this.chat,
+            temperature: +this.temperature,
+            user: this.randomName,
+            max_tokens: 40,
+          });
+          const answer = completion.data.choices[0].message;
+          this.chat.push(answer);
+          responseText = answer.content;
+        }
 
         now = new Date();
         const lapsedTime = (now - this.prevTime) / 1000;
-        this.__output = completion.data.choices[0].text;
+        this.__output = responseText;
         const newText = this.__output.replace(/[\r\n]/gm, '');
         let response = pendingText + newText;
         lengthExceeded = (fullText.length + response.length) > this.maxLength;
