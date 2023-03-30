@@ -199,7 +199,6 @@ class OpenAIApp extends Homey.App {
         });
         retryCount = 0;
       } catch (err) {
-        this.log(err);
         if (retryCount === 1) {
           throw new Error('Could not Initialize the webhook despite multiple attempts. Please restart the app');
         }

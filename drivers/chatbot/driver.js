@@ -7,6 +7,16 @@ const { v4: uuidv4 } = require('uuid');
 /**
  * This is the driver for chat bot devices that communicate with
  * OpenAI APIs to add LLM driven conversation logic for Homey.
+ * 
+ * TODO:
+ * - Add support for summarization of chat history to keep token count low.
+ *   - API returns token count for each completion, so we could have a setting
+ *     limit for when to summarize the chat history.
+ *   - Also support action flow card to summarize chat history.
+ *   - Could even have an optional setting for summarization promt and model.
+ * - Add flow cards for non-advanced flows.
+ * - Add conditional flows for things like
+ *   - response for "Prompt" contains "X".
  */
 class ChatBotDriver extends Driver {
   /**

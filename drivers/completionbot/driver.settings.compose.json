@@ -70,7 +70,7 @@
           "en": "Max Token Limit"
         },
         "hint": { 
-          "en": "The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (4096 - prompt tokens)"
+          "en": "The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (2049 - prompt tokens)"
         },
         "value": 2049,
         "min": 20,

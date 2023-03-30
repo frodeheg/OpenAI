@@ -233,12 +233,6 @@
       },
       {
         "title": {
-          "en": "Make it stop raining."
-        },
-        "id": "chatbot_send_question"
-      },
-      {
-        "title": {
           "en": "Tell ChatGPT to send next partial response",
           "no": "Be ChatGPT om å sende neste delsvar"
         },
@@ -607,7 +601,7 @@
                 "en": "Max Token Limit"
               },
               "hint": {
-                "en": "The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (4096 - prompt tokens)"
+                "en": "The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (2049 - prompt tokens)"
               },
               "value": 2049,
               "min": 20,
