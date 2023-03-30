@@ -1,0 +1,86 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "ChatBot Settings"
+    },
+    "children": [
+      {
+        "id": "model",
+        "type": "dropdown",
+        "label": {
+          "en": "Model"
+        },
+        "value": "gpt-3.5-turbo",
+        "values": [
+          {
+            "id": "gpt-4",
+            "label": {
+              "en": "gpt-4"
+            }
+          },
+          {
+            "id": "gpt-4-32k",
+            "label": {
+              "en": "gpt-4-32k"
+            }
+          },
+          {
+            "id": "gpt-3.5-turbo",
+            "label": {
+              "en": "gpt-3.5-turbo"
+            }
+          }
+        ]
+      },
+      {
+        "id": "max_tokens",
+        "type": "number",
+        "label": {
+          "en": "Max Token Limit"
+        },
+        "hint": { 
+          "en": "The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (4096 - prompt tokens)"
+        },
+        "value": 4096,
+        "min": 20,
+        "max": 4096
+      },
+      {
+        "id": "temperature",
+        "type": "number",
+        "label": {
+          "en": "Temperature"
+        },
+        "hint": { 
+          "en": "Defines the creativity of the responses. 0.0 is deterministic, 1.0 is the most creative."
+        },
+        "value": 0.7,
+        "min": 0.0,
+        "max": 1.0
+      },
+      {
+        "id": "system_message",
+        "type": "text",
+        "label": {
+          "en": "System message"
+        },
+        "hint": { 
+          "en": "Typically, a conversation is formatted with a system message first. The system message helps set the behavior of the assistant."
+        },
+        "value": "You are a helpful assistant."
+      },
+      {
+        "id": "timeout",
+        "type": "number",
+        "label": {
+          "en": "Timeout in milliseconds"
+        },
+        "hint": { 
+          "en": "Timeout in milliseconds before failing the request."
+        },
+        "value": 30000
+      }
+    ]
+  }
+]

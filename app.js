@@ -15,7 +15,7 @@ const INTERFACE = {
   CHAT: 2,
 };
 
-class MyApp extends Homey.App {
+class OpenAIApp extends Homey.App {
 
   /**
    * onInit is called when the app is initialized.
@@ -24,7 +24,7 @@ class MyApp extends Homey.App {
     this.__status = STATUS_IDLE;
     this.__input = '';
     this.__output = '';
-    this.log('MyApp has been initialized');
+    this.log('OpenAIApp has been initialized');
     this.randomName = this.homey.settings.get('UserID');
     if (this.randomName === null) {
       this.log('First time running so creating unique UserID');
@@ -157,7 +157,7 @@ class MyApp extends Homey.App {
     console.log(`Webhook address: ${webhook}`);
     this.homey.settings.set('webhook', webhook);
     let retryCount = 10;
-    while (retryCount > 0) {
+    while (retryCount > 0 && webhookId != null) {
       try {
         const myWebhook = await this.homey.cloud.createWebhook(webhookId, webhookSecret, data);
 
@@ -199,6 +199,7 @@ class MyApp extends Homey.App {
         });
         retryCount = 0;
       } catch (err) {
+        this.log(err);
         if (retryCount === 1) {
           throw new Error('Could not Initialize the webhook despite multiple attempts. Please restart the app');
         }
@@ -405,4 +406,4 @@ class MyApp extends Homey.App {
 
 }
 
-module.exports = MyApp;
+module.exports = OpenAIApp;

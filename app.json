@@ -233,6 +233,12 @@
       },
       {
         "title": {
+          "en": "Make it stop raining."
+        },
+        "id": "chatbot_send_question"
+      },
+      {
+        "title": {
           "en": "Tell ChatGPT to send next partial response",
           "no": "Be ChatGPT om å sende neste delsvar"
         },
@@ -313,7 +319,327 @@
           }
         ],
         "id": "generate-an-image"
+      },
+      {
+        "id": "send_question",
+        "title": {
+          "en": "Send question to chatbot"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=chatbot"
+          },
+          {
+            "name": "question",
+            "type": "text"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "message",
+            "type": "string",
+            "title": {
+              "en": "Message"
+            },
+            "example": "The answer."
+          }
+        ]
+      },
+      {
+        "id": "clear_history",
+        "title": {
+          "en": "Clear chat history"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=chatbot"
+          }
+        ]
+      },
+      {
+        "id": "prompt",
+        "title": {
+          "en": "Send prompt to completion bot"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=completionbot"
+          },
+          {
+            "name": "prompt",
+            "type": "text"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "completion",
+            "type": "string",
+            "title": {
+              "en": "Completion"
+            },
+            "example": "The text completion."
+          }
+        ]
       }
     ]
-  }
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "ChatBot"
+      },
+      "class": "other",
+      "capabilities": [],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/chatbot/assets/images/small.png",
+        "large": "/drivers/chatbot/assets/images/large.png",
+        "xlarge": "/drivers/chatbot/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "chatbot",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "ChatBot Settings"
+          },
+          "children": [
+            {
+              "id": "model",
+              "type": "dropdown",
+              "label": {
+                "en": "Model"
+              },
+              "value": "gpt-3.5-turbo",
+              "values": [
+                {
+                  "id": "gpt-4",
+                  "label": {
+                    "en": "gpt-4"
+                  }
+                },
+                {
+                  "id": "gpt-4-32k",
+                  "label": {
+                    "en": "gpt-4-32k"
+                  }
+                },
+                {
+                  "id": "gpt-3.5-turbo",
+                  "label": {
+                    "en": "gpt-3.5-turbo"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "max_tokens",
+              "type": "number",
+              "label": {
+                "en": "Max Token Limit"
+              },
+              "hint": {
+                "en": "The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (4096 - prompt tokens)"
+              },
+              "value": 4096,
+              "min": 20,
+              "max": 4096
+            },
+            {
+              "id": "temperature",
+              "type": "number",
+              "label": {
+                "en": "Temperature"
+              },
+              "hint": {
+                "en": "Defines the creativity of the responses. 0.0 is deterministic, 1.0 is the most creative."
+              },
+              "value": 0.7,
+              "min": 0,
+              "max": 1
+            },
+            {
+              "id": "system_message",
+              "type": "text",
+              "label": {
+                "en": "System message"
+              },
+              "hint": {
+                "en": "Typically, a conversation is formatted with a system message first. The system message helps set the behavior of the assistant."
+              },
+              "value": "You are a helpful assistant."
+            },
+            {
+              "id": "timeout",
+              "type": "number",
+              "label": {
+                "en": "Timeout in milliseconds"
+              },
+              "hint": {
+                "en": "Timeout in milliseconds before failing the request."
+              },
+              "value": 30000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "CompletionBot"
+      },
+      "class": "other",
+      "capabilities": [],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/completionbot/assets/images/small.png",
+        "large": "/drivers/completionbot/assets/images/large.png",
+        "xlarge": "/drivers/completionbot/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "completionbot",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "CompletionBot Settings"
+          },
+          "children": [
+            {
+              "id": "model",
+              "type": "dropdown",
+              "label": {
+                "en": "Model"
+              },
+              "value": "text-davinci-003",
+              "values": [
+                {
+                  "id": "text-davinci-003",
+                  "label": {
+                    "en": "text-davinci-003"
+                  }
+                },
+                {
+                  "id": "text-davinci-002",
+                  "label": {
+                    "en": "text-davinci-002"
+                  }
+                },
+                {
+                  "id": "text-babbage-001",
+                  "label": {
+                    "en": "text-babbage-001"
+                  }
+                },
+                {
+                  "id": "text-ada-001",
+                  "label": {
+                    "en": "text-ada-001"
+                  }
+                },
+                {
+                  "id": "davinci",
+                  "label": {
+                    "en": "davinci"
+                  }
+                },
+                {
+                  "id": "curie",
+                  "label": {
+                    "en": "curie"
+                  }
+                },
+                {
+                  "id": "babbage",
+                  "label": {
+                    "en": "babbage"
+                  }
+                },
+                {
+                  "id": "ada",
+                  "label": {
+                    "en": "ada"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "max_tokens",
+              "type": "number",
+              "label": {
+                "en": "Max Token Limit"
+              },
+              "hint": {
+                "en": "The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (4096 - prompt tokens)"
+              },
+              "value": 2049,
+              "min": 20,
+              "max": 2049
+            },
+            {
+              "id": "temperature",
+              "type": "number",
+              "label": {
+                "en": "Temperature"
+              },
+              "hint": {
+                "en": "Defines the creativity of the responses. 0.0 is deterministic, 1.0 is the most creative."
+              },
+              "value": 0.7,
+              "min": 0,
+              "max": 1
+            },
+            {
+              "id": "timeout",
+              "type": "number",
+              "label": {
+                "en": "Timeout in milliseconds"
+              },
+              "hint": {
+                "en": "Timeout in milliseconds before failing the request."
+              },
+              "value": 30000
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

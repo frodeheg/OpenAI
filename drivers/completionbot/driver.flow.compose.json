@@ -1,0 +1,22 @@
+{
+  "actions": [
+    {
+      "id": "prompt",
+      "title": { "en": "Send prompt to completion bot" },
+      "args": [
+        {
+          "name": "prompt",
+          "type": "text"
+        }
+      ],
+      "tokens": [
+        {
+          "name": "completion",
+          "type": "string",
+          "title": { "en": "Completion" },
+          "example": "The text completion."
+        }
+      ]
+    }
+  ]
+}

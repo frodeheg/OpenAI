@@ -1,0 +1,105 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "CompletionBot Settings"
+    },
+    "children": [
+      {
+        "id": "model",
+        "type": "dropdown",
+        "label": {
+          "en": "Model"
+        },
+        "value": "text-davinci-003",
+        "values": [
+          {
+            "id": "text-davinci-003",
+            "label": {
+              "en": "text-davinci-003"
+            }
+          },
+          {
+            "id": "text-davinci-002",
+            "label": {
+              "en": "text-davinci-002"
+            }
+          },
+          {
+            "id": "text-babbage-001",
+            "label": {
+              "en": "text-babbage-001"
+            }
+          },
+          {
+            "id": "text-ada-001",
+            "label": {
+              "en": "text-ada-001"
+            }
+          },
+          {
+            "id": "davinci",
+            "label": {
+              "en": "davinci"
+            }
+          },
+          {
+            "id": "curie",
+            "label": {
+              "en": "curie"
+            }
+          },
+          {
+            "id": "babbage",
+            "label": {
+              "en": "babbage"
+            }
+          },
+          {
+            "id": "ada",
+            "label": {
+              "en": "ada"
+            }
+          }
+        ]
+      },
+      {
+        "id": "max_tokens",
+        "type": "number",
+        "label": {
+          "en": "Max Token Limit"
+        },
+        "hint": { 
+          "en": "The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (4096 - prompt tokens)"
+        },
+        "value": 2049,
+        "min": 20,
+        "max": 2049
+      },
+      {
+        "id": "temperature",
+        "type": "number",
+        "label": {
+          "en": "Temperature"
+        },
+        "hint": { 
+          "en": "Defines the creativity of the responses. 0.0 is deterministic, 1.0 is the most creative."
+        },
+        "value": 0.7,
+        "min": 0.0,
+        "max": 1.0
+      },
+      {
+        "id": "timeout",
+        "type": "number",
+        "label": {
+          "en": "Timeout in milliseconds"
+        },
+        "hint": { 
+          "en": "Timeout in milliseconds before failing the request."
+        },
+        "value": 30000
+      }
+    ]
+  }
+]

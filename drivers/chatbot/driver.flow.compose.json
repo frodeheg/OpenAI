@@ -1,0 +1,26 @@
+{
+  "actions": [
+    {
+      "id": "send_question",
+      "title": { "en": "Send question to chatbot" },
+      "args": [
+        {
+          "name": "question",
+          "type": "text"
+        }
+      ],
+      "tokens": [
+        {
+          "name": "message",
+          "type": "string",
+          "title": { "en": "Message" },
+          "example": "The answer."
+        }
+      ]
+    },
+    {
+      "id": "clear_history",
+      "title": { "en": "Clear chat history" }
+    }
+  ]
+}
