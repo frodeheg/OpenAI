@@ -67,5 +67,8 @@
   },
   "1.4.1": {
     "en": "Added chatbots from Tor Kreutzer"
+  },
+  "1.5.0": {
+    "en": "Added Contribution string for Tor Kreutzer for the new chatbots."
   }
 }
