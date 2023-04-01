@@ -33,6 +33,30 @@
     "name": "Frode Heggelund",
     "email": "frode.heggelund@gmail.com"
   },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Frode Heggelund",
+        "email": "frode.heggelund@gmail.com"
+      },
+      {
+        "name": "Tor Kreutzer"
+      },
+      {
+        "name": "Pixy.org",
+        "what": "Artwork",
+        "url": "https://pixy.org"
+      }
+    ],
+    "translators": [
+      {
+        "name": "🇳🇴 🇬🇧 Frode Heggelund"
+      },
+      {
+        "name": "🇬🇧 Tor Kreutzer"
+      }
+    ]
+  },
   "api": {
     "updateLog": {
       "method": "GET",
