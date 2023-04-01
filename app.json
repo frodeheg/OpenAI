@@ -317,7 +317,12 @@
       {
         "id": "send_question",
         "title": {
-          "en": "Send question to chatbot"
+          "en": "Send question to chatbot",
+          "no": "Send et spørsmål til chatbotten"
+        },
+        "titleFormatted": {
+          "en": "Send the question [[question]] to the chatbot and return the answer",
+          "no": "Send spørsmålet [[question]] til chatbotten og returner svaret"
         },
         "args": [
           {
@@ -335,16 +340,21 @@
             "name": "message",
             "type": "string",
             "title": {
-              "en": "Message"
+              "en": "Message",
+              "no": "Melding"
             },
-            "example": "The answer."
+            "example": {
+              "en": "The answer.",
+              "no": "Svaret."
+            }
           }
         ]
       },
       {
         "id": "clear_history",
         "title": {
-          "en": "Clear chat history"
+          "en": "Clear chat history",
+          "no": "Fjern historikken"
         },
         "args": [
           {
@@ -357,7 +367,12 @@
       {
         "id": "prompt",
         "title": {
-          "en": "Send prompt to completion bot"
+          "en": "Send prompt to completion bot",
+          "no": "Send en tekst for fullføring til kompleterrings botten"
+        },
+        "titleFormatted": {
+          "en": "Send prompt [[prompt]] to completion bot and return the answer",
+          "no": "Send teksten [[prompt]] for fullføring til kompleterrings botten og returner svaret"
         },
         "args": [
           {
@@ -375,9 +390,13 @@
             "name": "completion",
             "type": "string",
             "title": {
-              "en": "Completion"
+              "en": "Completion",
+              "no": "Komplettering"
             },
-            "example": "The text completion."
+            "example": {
+              "en": "The text completion.",
+              "no": "Tekst for komplettering."
+            }
           }
         ]
       }

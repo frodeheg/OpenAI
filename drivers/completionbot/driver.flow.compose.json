@@ -2,7 +2,14 @@
   "actions": [
     {
       "id": "prompt",
-      "title": { "en": "Send prompt to completion bot" },
+      "title": {
+        "en": "Send prompt to completion bot",
+        "no": "Send en tekst for fullføring til kompleterrings botten"
+      },
+      "titleFormatted": {
+        "en": "Send prompt [[prompt]] to completion bot and return the answer",
+        "no": "Send teksten [[prompt]] for fullføring til kompleterrings botten og returner svaret"
+      },
       "args": [
         {
           "name": "prompt",
@@ -13,10 +20,17 @@
         {
           "name": "completion",
           "type": "string",
-          "title": { "en": "Completion" },
-          "example": "The text completion."
+          "title": {
+            "en": "Completion",
+            "no": "Komplettering"
+          },
+          "example": {
+            "en": "The text completion.",
+            "no": "Tekst for komplettering."
+          }
         }
       ]
     }
   ]
 }
+

@@ -2,7 +2,14 @@
   "actions": [
     {
       "id": "send_question",
-      "title": { "en": "Send question to chatbot" },
+      "title": {
+        "en": "Send question to chatbot",
+        "no": "Send et spørsmål til chatbotten"
+      },
+      "titleFormatted": {
+        "en": "Send the question [[question]] to the chatbot and return the answer",
+        "no": "Send spørsmålet [[question]] til chatbotten og returner svaret"
+      },
       "args": [
         {
           "name": "question",
@@ -13,14 +20,23 @@
         {
           "name": "message",
           "type": "string",
-          "title": { "en": "Message" },
-          "example": "The answer."
+          "title": {
+            "en": "Message",
+            "no": "Melding"
+          },
+          "example": {
+            "en": "The answer.",
+            "no": "Svaret."
+          }
         }
       ]
     },
     {
       "id": "clear_history",
-      "title": { "en": "Clear chat history" }
+      "title": {
+        "en": "Clear chat history",
+        "no": "Fjern historikken"
+      }
     }
   ]
 }
