@@ -83,7 +83,7 @@ async function testChat() {
   let finished = false;
   let iter = 0;
   // const userQuestion = "Please turn on the lights on the device listed on http://www.dinside.no";
-  const userQuestion = "Please turn on the lights in the living room";
+  const userQuestion = "Slå på lysene i stuen";
   const question = 'Below you will be provided with a json structure containing a user message, device list and classification rules.\n'
   + '{\n'
   + ` "message": "${userQuestion}"\n`
@@ -115,14 +115,14 @@ async function testChat() {
   + '}\n'
   + 'Please analyze the user message and classify it according to the rules. The complete answer must be returned as JSON as follows without any explanations:\n'
   + '{\n'
-  + ' "actions": [insert one or more actions here]\n'
+  + ' "actions": [insert one or more actions here],\n'
+  + ' "message": "insert a message you would like to communicate back to the user. It must be in the same language as the user message in the earlier json structure"\n'
   + '}\n'
   + 'An action is defined as follows:\n'
   + '{\n'
   + '  "action_id": "insert id from the rule set here",\n'
   + '  "parameter1": "insert parameter relevant to the action, if applicable",\n'
   + '  "parameter2": "insert parameter relevant to the action, if applicable",\n'
-  + '  "message": "insert a message you would like to communicate back to the user"\n'
   + ' }\n';
   const messages = [];
   messages.push({ role: 'user', content: question });
