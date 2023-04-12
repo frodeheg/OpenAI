@@ -82,15 +82,88 @@ async function testChat() {
 
   let finished = false;
   let iter = 0;
+  // const userQuestion = "Please turn on the lights on the device listed on http://www.dinside.no";
+  const userQuestion = "Please turn on the lights in the living room";
+  const question = 'Below you will be provided with a json structure containing a user message, device list and classification rules.\n'
+  + '{\n'
+  + ` "message": "${userQuestion}"\n`
+  + ' "deviceList": [\n'
+  + ' {\n'
+  + '  "deviceId": "ABF332DD3-BAACE3E4E-111111",\n'
+  + '  "deviceName": "Light 1",\n'
+  + '  "zone": "Living room"\n'
+  + ' },\n'
+  + ' {\n'
+  + '  "deviceId": "ABF332DD3-BAACE3E4E-222222",\n'
+  + '  "deviceName": "Light 2",\n'
+  + '  "zone": "Living room"\n'
+  + ' },\n'
+  + ' {\n'
+  + '  "deviceId": "aaaaaaaaaaa-abbbbb",\n'
+  + '  "deviceName": "Light 1",\n'
+  + '  "zone": "Kitchen"\n'
+  + ' }\n'
+  + '],\n'
+
+  + ' "rules": [\n'
+  + '  { "id": 0, "description": "The message was not understood" },'
+  + '  { "id": 1, "description": "turns on a device with deviceId inserted in parameter1" },'
+  + '  { "id": 2, "description": "turns off a device with deviceId inserted in parameter1" },'
+  + '  { "id": 3, "description": "changes the temperature of a device with deviceId inserted in parameter1 and temperature in parameter2" },'
+  + '  { "id": 4, "description": "Look up the web page inserted in parameter1 before any further classification can be performed" }'
+  + ' ]\n'
+  + '}\n'
+  + 'Please analyze the user message and classify it according to the rules. The complete answer must be returned as JSON as follows without any explanations:\n'
+  + '{\n'
+  + ' "actions": [insert one or more actions here]\n'
+  + '}\n'
+  + 'An action is defined as follows:\n'
+  + '{\n'
+  + '  "action_id": "insert id from the rule set here",\n'
+  + '  "parameter1": "insert parameter relevant to the action, if applicable",\n'
+  + '  "parameter2": "insert parameter relevant to the action, if applicable",\n'
+  + '  "message": "insert a message you would like to communicate back to the user"\n'
+  + ' }\n';
   const messages = [];
-  messages.push({ role: 'user', content: 'Tell a fairytale!' });
+  messages.push({ role: 'user', content: question });
+
+  /*const answer1 = "{\n   \"actions\":[\n      {\n         \"action_id\":5,\n         \"parameter1\":\"http://www.dinside.no\",\n         \"message\":\"Please wait while we look up the web page to correctly classify your message\"\n      }\n   ]\n}";
+  messages.push({ role: 'assistant', content: answer1 });
+  const answer2 = 'Please update the json structure based on the text from the web page. The web page said: <HTML><BODY><table>'
+  + '<tr><th>Device></th><th>deviceId</th></tr>'
+  + '<tr><td>Light top floor</td><td>ABF332DD3-BAACE3E4E-AAC568</td></tr>'
+  + '<tr><td>Light living room</td><td>FFFF22222-FFF21111-223333</td></tr>'
+  + '</table></BODY></HTML>\n';
+  messages.push({ role: 'user', content: answer2 });*/
+
+  /*const answer1 = "{\n \"actions\": [\n   {\n     \"action_id\": 1,\n     \"parameter1\": \"living room\",\n     \"parameter2\": null,\n     \"message\": \"Turning on lights in the living room\"\n   }\n ]\n}";
+  messages.push({ role: 'assistant', content: answer1 });
+  const answer2 = 'Please update the json structure with correct deviceId\'s picked from the following array:\n'
+  + '[\n'
+  + ' {\n'
+  + '  "deviceId": "ABF332DD3-BAACE3E4E-111111",\n'
+  + '  "deviceName": "Light 1",\n'
+  + '  "zone": "Living room"\n'
+  + ' },\n'
+  + ' {\n'
+  + '  "deviceId": "ABF332DD3-BAACE3E4E-222222",\n'
+  + '  "deviceName": "Light 2",\n'
+  + '  "zone": "Living room"\n'
+  + ' },\n'
+  + ' {\n'
+  + '  "deviceId": "aaaaaaaaaaa-abbbbb",\n'
+  + '  "deviceName": "Light 1",\n'
+  + '  "zone": "Kitchen"\n'
+  + ' }\n'
+  + ']\n';
+  messages.push({ role: 'user', content: answer2 });*/
   while (!finished) {
     let completion;
     try {
       completion = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
         messages,
-        max_tokens: 10,
+        max_tokens: 200,
       });
       // console.log(`Iteration: ${iter} : ${JSON.stringify(completion.data)}`);
     } catch (err) {
