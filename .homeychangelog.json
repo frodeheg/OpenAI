@@ -70,5 +70,8 @@
   },
   "1.5.0": {
     "en": "Added Contribution string for Tor Kreutzer for the new chatbots."
+  },
+  "1.5.1": {
+    "en": "Fixed a crash bug (Ticket #7)"
   }
 }
