@@ -67,7 +67,7 @@ async function testCommand() {
     prompt: 'please continue',
     user: 'frode',
     max_tokens: 100,
-    temperature: 0.6,
+    temperature: 0,
   });
   //console.log(`test: ${completion2.data.choices[0].text}`);
   console.log(completion2);*/
@@ -83,11 +83,9 @@ async function testChat() {
   let finished = false;
   let iter = 0;
   // const userQuestion = "Please turn on the lights on the device listed on http://www.dinside.no";
-  const userQuestion = "Slå på lysene i stuen";
-  const question = 'Below you will be provided with a json structure containing a user message, device list and classification rules.\n'
-  + '{\n'
-  + ` "message": "${userQuestion}"\n`
-  + ' "deviceList": [\n'
+  // const userQuestion = "Hva er temperaturen i varmtvannstanken?";
+  const userQuestion = "Turn on the lights in the kitchen";
+  const deviceList = '[\n'
   + ' {\n'
   + '  "deviceId": "ABF332DD3-BAACE3E4E-111111",\n'
   + '  "deviceName": "Light 1",\n'
@@ -103,14 +101,15 @@ async function testChat() {
   + '  "deviceName": "Light 1",\n'
   + '  "zone": "Kitchen"\n'
   + ' }\n'
-  + '],\n'
-
+  + ']';
+  /*const question = 'Below you will be provided with a json structure containing a user message, device list and classification rules.\n'
+  + '{\n'
+  + ` "message": "${userQuestion}"\n`
+  + ` "deviceList": ${deviceList},\n`
   + ' "rules": [\n'
-  + '  { "id": 0, "description": "The message was not understood" },'
-  + '  { "id": 1, "description": "turns on a device with deviceId inserted in parameter1" },'
-  + '  { "id": 2, "description": "turns off a device with deviceId inserted in parameter1" },'
-  + '  { "id": 3, "description": "changes the temperature of a device with deviceId inserted in parameter1 and temperature in parameter2" },'
-  + '  { "id": 4, "description": "Look up the web page inserted in parameter1 before any further classification can be performed" }'
+  + '  { "id": 1, "description": "Changes the value of a writeable capability for a device. The deviceId must be inserted in parameter1, the capabilityId in parameter2 and the new value in parameter3" },'
+  + '  { "id": 2, "description": "Look up the web page inserted in parameter1 before any further classification can be performed" },'
+  + '  { "id": 0, "description": "The message did not fit any of the other rules" }'
   + ' ]\n'
   + '}\n'
   + 'Please analyze the user message and classify it according to the rules. The complete answer must be returned as JSON as follows without any explanations:\n'
@@ -123,9 +122,30 @@ async function testChat() {
   + '  "action_id": "insert id from the rule set here",\n'
   + '  "parameter1": "insert parameter relevant to the action, if applicable",\n'
   + '  "parameter2": "insert parameter relevant to the action, if applicable",\n'
-  + ' }\n';
+  + '  "parameter3": "insert parameter relevant to the action, if applicable",\n'
+  + ' }\n'; */
+
+  // ===== Step 1) Determine what is needed
+  /*const question = `Below is a json structure containing a user message and a list of additional information which is available:\n`
+  + '{\n'
+  + ` "message": "${userQuestion}"\n`
+  + ' "info": {\n'
+  + '    "devices": "A list of devices",\n'
+  + '    "zone": "A list describing which zone the devices belong to",\n'
+  + '    "capabilities": "A list describing which capabilities every device have. A capability can be read or written"\n'
+  + ' }\n'
+  + '}\n'
+  + 'Please analyze the user message and return a JSON string setting all of the info parameters to true or false depending on whether the information within those lists are required to take action on the user message. Nothing else than the JSON string should be returned.\n';*/
+  // ===== Step 2) Determine the device(s) in question
+  const question = `Below is a json structure containing a user message and a list of devices:\n`
+  + '{\n'
+  + ` "message": "${userQuestion}",\n`
+  + ` "devices": ${deviceList}\n`
+  + '}\n'
+  + 'Please analyze the user message and return a JSON array that lists the deviceId\'s for the devices that are affected by the user message without any further explanations.\n';
   const messages = [];
   messages.push({ role: 'user', content: question });
+  console.log(messages);
 
   /*const answer1 = "{\n   \"actions\":[\n      {\n         \"action_id\":5,\n         \"parameter1\":\"http://www.dinside.no\",\n         \"message\":\"Please wait while we look up the web page to correctly classify your message\"\n      }\n   ]\n}";
   messages.push({ role: 'assistant', content: answer1 });
