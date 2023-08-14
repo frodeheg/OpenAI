@@ -4,8 +4,8 @@
     "no": "En webhook ble utløst"
   },
   "titleFormatted": {
-    "en": "A webhook triggered with flag [[flag]] and message [[message]]",
-    "no": "En webhook ble utløst med flagg [[flag]] og beskjed [[message]]"
+    "en": "A webhook triggered with a flag and a message",
+    "no": "En webhook ble utløst med et flagg og en beskjed"
   },
   "hint": {
     "en": "Use webhooks to allow for other input sources to this app. See the app settings help section to see what the webhook address is. If you add a flag then you can for example use it to choose whether or not to forward the text to image generation or to ChatGPT",
