@@ -77,16 +77,16 @@ class CompletionBotDriver extends Driver {
    */
   async sendCompletionRequest(prompt, settings) {
     try {
-      let response = await this.getOpenAI().createCompletion({
+      let response = await this.getOpenAI().completions.create({
         model: settings.model,
         prompt: prompt,
         temperature: +settings.temperature,
         max_tokens: +settings.max_tokens,
       });
 
-      let finish_reason = response.data.choices[0].finish_reason;
+      let finish_reason = response.choices[0].finish_reason;
       if (finish_reason === 'stop') {
-        let text = response.data.choices[0].text;
+        let text = response.choices[0].text;
         return { completion: text };
       }
       else if (finish_reason === 'length') {
@@ -100,7 +100,6 @@ class CompletionBotDriver extends Driver {
         throw new Error('OpenAI API returned incomplete model output due to unknown reason');
       }
     } catch (error) {
-      this.log(error.response ? error.response.data : error);
       throw error;
     }
   }

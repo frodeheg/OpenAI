@@ -282,14 +282,14 @@ class OpenAIApp extends Homey.App {
         let responseText;
         let completion;
         if (this.interface === INTERFACE.COMPLETION) {
-          completion = await this.openai.createCompletion({
+          completion = await this.openai.completions.create({
             model: this.engine,
             prompt: this.__input,
             temperature: +this.temperature,
             user: this.randomName,
             max_tokens: 40,
           });
-          responseText = completion.data.choices[0].text;
+          responseText = completion.choices[0].text;
         } else { // this.interface === INTERFACE.CHAT
           completion = await this.openai.chat.completions.create({
             model: this.engine,
@@ -298,7 +298,7 @@ class OpenAIApp extends Homey.App {
             user: this.randomName,
             max_tokens: 40,
           });
-          const answer = completion.data.choices[0].message;
+          const answer = completion.choices[0].message;
           this.chat.push(answer);
           responseText = answer.content;
         }
