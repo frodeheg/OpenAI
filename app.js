@@ -291,7 +291,7 @@ class OpenAIApp extends Homey.App {
           });
           responseText = completion.data.choices[0].text;
         } else { // this.interface === INTERFACE.CHAT
-          completion = await this.openai.createChatCompletion({
+          completion = await this.openai.chat.completions.create({
             model: this.engine,
             messages: this.chat,
             temperature: +this.temperature,

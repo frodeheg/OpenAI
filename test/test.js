@@ -38,7 +38,7 @@ async function testCommand() {
         max_tokens: 40,
         temperature: 0.6,
       }); */
-      completion = await openai.createChatCompletion({
+      completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [{role: "user", content: "Hello!"}]
       });
@@ -180,7 +180,7 @@ async function testChat() {
   while (!finished) {
     let completion;
     try {
-      completion = await openai.createChatCompletion({
+      completion = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
         messages,
         max_tokens: 200,
