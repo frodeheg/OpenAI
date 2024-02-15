@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const { Configuration, OpenAIApi } = require('openai');
+const { OpenAI } = require('openai');
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -78,11 +78,9 @@ class OpenAIApp extends Homey.App {
     this.homey.settings.on('set', (setting) => {
       if (setting === 'APIKey') {
         delete this.openai;
-        delete this.configuration;
-        this.configuration = new Configuration({
+        this.openai = new OpenAI({
           apiKey: this.homey.settings.get('APIKey'),
         });
-        this.openai = new OpenAIApi(this.configuration);
       }
       this.engine = this.homey.settings.get('engine');
       this.interface = this.checkInterface(this.engine);
@@ -100,10 +98,9 @@ class OpenAIApp extends Homey.App {
     this.tokenQueue = [];
     this.canSendToken = true;
 
-    this.configuration = new Configuration({
+    this.openai = new OpenAI({
       apiKey: this.homey.settings.get('APIKey'),
     });
-    this.openai = new OpenAIApi(this.configuration);
 
     // Simple flows flowcard
     const askQuestionActionSimple = this.homey.flow.getActionCard('ask-chatgpt-a-question-simple');

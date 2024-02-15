@@ -117,27 +117,35 @@ class ChatBotDriver extends Driver {
    * @returns {Promise<{ completion: string }>} The answer to the question in a completion token.
    */
   async sendChatRequest(chat, settings) {
-    let response = await this.getOpenAI().createChatCompletion({
-      model: settings.model,
-      messages: chat,
-      temperature: +settings.temperature,
-      max_tokens: +settings.max_tokens,
-    });
-    
-    let finish_reason = response.data.choices[0].finish_reason;
-    if (finish_reason === 'stop') {
-      let message = response.data.choices[0].message;
-      return message;
-    }
-    else if (finish_reason === 'length') {
-      throw new Error('OpenAI API returned incomplete model output due to max_tokens parameter or token limit');
-    }
-    else if (finish_reason === 'content_filter') {
-      throw new Error('OpenAI API returned incomplete model output due to a flag from content filters');
-    }
-    else {
-      // Note: finish_reason === null is a valid case when doing streaming.
-      throw new Error('OpenAI API returned incomplete model output due to unknown reason');
+    try{
+
+      let response = await this.getOpenAI().chat.completions.create({
+        model: settings.model,
+        messages: chat,
+        temperature: +settings.temperature,
+        max_tokens: +settings.max_tokens,
+        response_format: { type: settings.response_format ?? "text" }
+      });
+      
+      let finish_reason = response.choices[0].finish_reason;
+      if (finish_reason === 'stop') {
+        let message = response.choices[0].message;
+        return message;
+      }
+      else if (finish_reason === 'length') {
+        throw new Error('OpenAI API returned incomplete model output due to max_tokens parameter or token limit');
+      }
+      else if (finish_reason === 'content_filter') {
+        throw new Error('OpenAI API returned incomplete model output due to a flag from content filters');
+      }
+      else {
+        // Note: finish_reason === null is a valid case when doing streaming.
+        throw new Error('OpenAI API returned incomplete model output due to unknown reason');
+      }
+    } catch (e) {
+      this.error(e);
+      var error = e.error;
+      throw new Error(error.message);
     }
   }
 

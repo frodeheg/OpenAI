@@ -478,9 +478,9 @@
                   }
                 },
                 {
-                  "id": "gpt-4-32k",
+                  "id": "gpt-4-turbo-preview",
                   "label": {
-                    "en": "gpt-4-32k"
+                    "en": "gpt-4-turbo-preview"
                   }
                 },
                 {
@@ -498,7 +498,7 @@
                 "en": "Max Token Limit"
               },
               "hint": {
-                "en": "The maximum number of tokens allowed for the generated answer. By default, the number of tokens the model can return will be (4096 - prompt tokens)"
+                "en": "The maximum number of output tokens allowed for the generated answer. By default, the number of tokens the model can return will be 4096"
               },
               "value": 4096,
               "min": 20,
@@ -538,6 +538,31 @@
                 "en": "Timeout in milliseconds before failing the request."
               },
               "value": 30000
+            },
+            {
+              "id": "response_format",
+              "type": "dropdown",
+              "label": {
+                "en": "Response format"
+              },
+              "hint": {
+                "en": "Specifying the format that the model must output."
+              },
+              "value": "text",
+              "values": [
+                {
+                  "id": "text",
+                  "label": {
+                    "en": "Text"
+                  }
+                },
+                {
+                  "id": "json_object",
+                  "label": {
+                    "en": "JSON"
+                  }
+                }
+              ]
             }
           ]
         }
@@ -547,6 +572,7 @@
       "name": {
         "en": "CompletionBot"
       },
+      "deprecated": true,
       "class": "other",
       "capabilities": [],
       "platforms": [
