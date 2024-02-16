@@ -11,54 +11,24 @@
         "label": {
           "en": "Model"
         },
-        "value": "text-davinci-003",
+        "value": "gpt-3.5-turbo-instruct",
         "values": [
           {
-            "id": "text-davinci-003",
+            "id": "gpt-3.5-turbo-instruct",
             "label": {
-              "en": "text-davinci-003"
+              "en": "gpt-3.5-turbo-instruct"
             }
           },
           {
-            "id": "text-davinci-002",
+            "id": "davinci-002",
             "label": {
-              "en": "text-davinci-002"
-            }
-          },
-          {
-            "id": "text-babbage-001",
-            "label": {
-              "en": "text-babbage-001"
-            }
-          },
-          {
-            "id": "text-ada-001",
-            "label": {
-              "en": "text-ada-001"
-            }
-          },
-          {
-            "id": "davinci",
-            "label": {
-              "en": "davinci"
-            }
-          },
-          {
-            "id": "curie",
-            "label": {
-              "en": "curie"
+              "en": "davinci-002"
             }
           },
           {
             "id": "babbage",
             "label": {
-              "en": "babbage"
-            }
-          },
-          {
-            "id": "ada",
-            "label": {
-              "en": "ada"
+              "en": "babbage-002"
             }
           }
         ]
