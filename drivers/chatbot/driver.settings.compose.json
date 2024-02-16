@@ -42,7 +42,7 @@
         "hint": { 
           "en": "The maximum number of output tokens allowed for the generated answer. By default, the number of tokens the model can return will be 4096"
         },
-        "value": 4096,
+        "value": 2000,
         "min": 20,
         "max": 4096
       },

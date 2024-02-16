@@ -154,7 +154,12 @@ class ChatBotDriver extends Driver {
    * @returns {Array<{role: string, content: string}>} The chat history for the chatbot device.
    */
   getChatHistory(chatbot) {
-    return chatbot.getStoreValue('history');
+    let history = chatbot.getStoreValue('history');
+    if (!Array.isArray(history)) {
+      this.clearChatHistory(chatbot);
+      history = chatbot.getStoreValue('history');
+    }
+    return history;
   }
 
   /**
