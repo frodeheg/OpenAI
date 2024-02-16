@@ -31,14 +31,14 @@ async function testCommand() {
     let completion;
     try {
 
-      /* completion = await openai.createCompletion({
+      /* completion = await openai.completions.create({
         model: 'gpt-3.5-turbo',
         prompt,
         user: 'frode',
         max_tokens: 40,
         temperature: 0.6,
       }); */
-      completion = await openai.createChatCompletion({
+      completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [{role: "user", content: "Hello!"}]
       });
@@ -62,7 +62,7 @@ async function testCommand() {
   console.log(prompt);
   //console.log(completion.data.choices);
   console.log('----------');
-  /*const completion2 = await openai.createCompletion({
+  /*const completion2 = await openai.completions.create({
     model: "text-davinci-003",
     prompt: 'please continue',
     user: 'frode',
@@ -180,20 +180,20 @@ async function testChat() {
   while (!finished) {
     let completion;
     try {
-      completion = await openai.createChatCompletion({
+      completion = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
         messages,
         max_tokens: 200,
       });
       // console.log(`Iteration: ${iter} : ${JSON.stringify(completion.data)}`);
     } catch (err) {
-      console.log(`ERROR: ${err.response.data.error.message}`);
-      throw new Error(err.response.data.error.message);
+      console.log(`ERROR: ${err.error.message}`);
+      throw new Error(err.error.message);
     }
     await sleep(1500);
 
-    finished = completion.data.choices[0].finish_reason !== 'length'; // === 'stop'
-    const textToSplit = completion.data.choices[0].message;
+    finished = completion.choices[0].finish_reason !== 'length'; // === 'stop'
+    const textToSplit = completion.choices[0].message;
     messages.push(textToSplit);
     console.log(`Answer ${iter}: ${JSON.stringify(textToSplit)}`);
     /*const splitText = app.splitIntoSubstrings(textToSplit, 200);

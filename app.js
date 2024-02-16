@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const { Configuration, OpenAIApi } = require('openai');
+const { OpenAI } = require('openai');
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -78,11 +78,9 @@ class OpenAIApp extends Homey.App {
     this.homey.settings.on('set', (setting) => {
       if (setting === 'APIKey') {
         delete this.openai;
-        delete this.configuration;
-        this.configuration = new Configuration({
+        this.openai = new OpenAI({
           apiKey: this.homey.settings.get('APIKey'),
         });
-        this.openai = new OpenAIApi(this.configuration);
       }
       this.engine = this.homey.settings.get('engine');
       this.interface = this.checkInterface(this.engine);
@@ -100,10 +98,9 @@ class OpenAIApp extends Homey.App {
     this.tokenQueue = [];
     this.canSendToken = true;
 
-    this.configuration = new Configuration({
+    this.openai = new OpenAI({
       apiKey: this.homey.settings.get('APIKey'),
     });
-    this.openai = new OpenAIApi(this.configuration);
 
     // Simple flows flowcard
     const askQuestionActionSimple = this.homey.flow.getActionCard('ask-chatgpt-a-question-simple');
@@ -285,23 +282,23 @@ class OpenAIApp extends Homey.App {
         let responseText;
         let completion;
         if (this.interface === INTERFACE.COMPLETION) {
-          completion = await this.openai.createCompletion({
+          completion = await this.openai.completions.create({
             model: this.engine,
             prompt: this.__input,
             temperature: +this.temperature,
             user: this.randomName,
             max_tokens: 40,
           });
-          responseText = completion.data.choices[0].text;
+          responseText = completion.choices[0].text;
         } else { // this.interface === INTERFACE.CHAT
-          completion = await this.openai.createChatCompletion({
+          completion = await this.openai.chat.completions.create({
             model: this.engine,
             messages: this.chat,
             temperature: +this.temperature,
             user: this.randomName,
             max_tokens: 40,
           });
-          const answer = completion.data.choices[0].message;
+          const answer = completion.choices[0].message;
           this.chat.push(answer);
           responseText = answer.content;
         }
@@ -315,7 +312,7 @@ class OpenAIApp extends Homey.App {
         if (lengthExceeded) response += '. Aborted, length exceeded.';
         timeExceeded = lapsedTime > this.maxWait;
         if (timeExceeded) response += '. Aborted, time exceeded.';
-        finished = (completion.data.choices[0].finish_reason !== 'length') // === 'stop'
+        finished = (completion.choices[0].finish_reason !== 'length') // === 'stop'
           || lengthExceeded
           || timeExceeded;
         let splitPos = -1;
