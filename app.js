@@ -312,7 +312,7 @@ class OpenAIApp extends Homey.App {
         if (lengthExceeded) response += '. Aborted, length exceeded.';
         timeExceeded = lapsedTime > this.maxWait;
         if (timeExceeded) response += '. Aborted, time exceeded.';
-        finished = (completion.data.choices[0].finish_reason !== 'length') // === 'stop'
+        finished = (completion.choices[0].finish_reason !== 'length') // === 'stop'
           || lengthExceeded
           || timeExceeded;
         let splitPos = -1;
