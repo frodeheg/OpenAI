@@ -73,5 +73,8 @@
   },
   "1.5.1": {
     "en": "Fixed a crash bug (Ticket #7)"
+  },
+  "1.6.0": {
+    "en": "Removed deprecated engines and added engine selection/quality box for images. Fixed problems with ChatBot and CompletionBot (thanks Tor Kreutzer)."
   }
 }
