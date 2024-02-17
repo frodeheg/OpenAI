@@ -198,25 +198,40 @@ class OpenAIApp extends Homey.App {
           this.log('query:', args.query);
 
           let message = '';
+          let body = '';
           try {
-            const list = args.body['From SRS0'].split('\n');
+            // In case the mime header got corrupted homey think's it's json and messes up the message
+            body = (typeof args.body === 'string') ? args.body : JSON.stringify(args.body).replaceAll('\\n', '\n');
+            this.log(body);
+            const list = body.split('\n');
             let subject = '';
-            let message0 = '';
             let breaksFound = 0;
+            let plainTextPart = false;
+            let isBase64 = false;
             for (let i = 0; i < list.length; i++) {
-              breaksFound += list[i] === '';
               if ((breaksFound === 0) && list[i].startsWith('Subject: ')) subject = list[i].substring(9);
-              if (breaksFound === 1) message0 += list[i];
-              if (breaksFound === 2) message += list[i];
+              if (list[i].startsWith('Content-Type:')) {
+                if (list[i].includes('text/plain')) {
+                  plainTextPart = true;
+                  message = '';
+                  breaksFound = 0;
+                } else {
+                  plainTextPart = false;
+                }
+              }
+              if (list[i].startsWith('Content-Transfer-Encoding:')) isBase64 = list[i].includes('base64');
+              if (list[i].startsWith('--')) plainTextPart = false; // end of multipart block
+              if (plainTextPart && breaksFound === 1) message += (isBase64 ? Buffer.from(list[i], 'base64').toString() : list[i]);
+              breaksFound += list[i] === '';
             }
-            if (message === '') message = message0; // Very simplified for 'if the message was not multipart then pick the first part'
             this.log('subject:', subject);
           } catch (err) {
-            message = args.query.message;
+            this.log('==== ERROR ====\n', err);
           }
+          if (!message) message = args.query.message;
           this.log('message:', message);
           if (message) {
-            const flag = args.query.flag ? args.query.flag : '';
+            const flag = args.query.flag || '';
             this.log(`Flag: ${flag}`);
             const webhookToken = {
               flag,
@@ -225,7 +240,7 @@ class OpenAIApp extends Homey.App {
             const webhookTrigger = this.homey.flow.getTriggerCard('webhook-triggered');
             webhookTrigger.trigger(webhookToken);
           } else {
-            this.log('body', args.body);
+            this.log('body', body);
           }
         });
         retryCount = 0;
