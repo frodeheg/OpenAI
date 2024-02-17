@@ -14,6 +14,10 @@ const INTERFACE = {
   COMPLETION: 1,
   CHAT: 2,
 };
+const HTTP_STATUS = {
+  RATE_LIMIT: 429,
+  BAD_REQUEST: 400,
+};
 
 class OpenAIApp extends Homey.App {
 
@@ -39,6 +43,20 @@ class OpenAIApp extends Homey.App {
       this.homey.settings.set('engine', this.engine);
     }
     this.interface = this.checkInterface(this.engine);
+
+    this.imageEngine = this.homey.settings.get('imageEngine');
+    if (this.imageEngine === null) {
+      this.log('First time running so setting default imageEngine');
+      this.imageEngine = 'dall-e-2';
+      this.homey.settings.set('imageEngine', this.imageEngine);
+    }
+
+    this.imageQuality = this.homey.settings.get('imageQuality');
+    if (this.imageQuality === null) {
+      this.log('First time running so setting default imageQuality');
+      this.imageQuality = 'standard';
+      this.homey.settings.set('imageQuality', this.imageQuality);
+    }
 
     this.maxWait = this.homey.settings.get('maxWait');
     if (this.maxWait === null) {
@@ -83,6 +101,8 @@ class OpenAIApp extends Homey.App {
         });
       }
       this.engine = this.homey.settings.get('engine');
+      this.imageEngine = this.homey.settings.get('imageEngine');
+      this.imageQuality = this.homey.settings.get('imageQuality');
       this.interface = this.checkInterface(this.engine);
       this.maxWait = this.homey.settings.get('maxWait');
       this.maxLength = this.homey.settings.get('maxLength');
@@ -118,12 +138,26 @@ class OpenAIApp extends Homey.App {
       this.log(`Generate image of size ${args.size} from text ${args.description}`);
 
       // Start Image generation:
-      const response = await this.openai.createImage({
+      const size = Number.isFinite(+args.size) ? `${args.size}x${args.size}` : args.size;
+      const imageParams = {
+        model: this.imageEngine,
         prompt: args.description,
         n: 1,
-        size: `${args.size}x${args.size}`,
-      });
-      const imageUrl = response.data.data[0].url;
+        size,
+        quality: this.imageQuality,
+      };
+      const response = await this.openai.images.generate(imageParams)
+/*        .catch((err) => {
+          this.log(`ERROR: ${err.status}`);
+          if (err.status === HTTP_STATUS.RATE_LIMIT) {
+            // Try again (only 1 image per 1 minute)
+            return sleep(6000)
+              .then(() => { this.log('igjen'); return this.openai.images.generate(imageParams); });
+          }
+          this.log('ugg');
+          return Promise.reject(err);
+        })*/;
+      const imageUrl = response.data[0].url;
       this.log(`Got image: ${imageUrl}`);
       this.__image = imageUrl;
 
@@ -226,15 +260,13 @@ class OpenAIApp extends Homey.App {
     switch (this.engine) {
       case 'gpt-4':
       case 'gpt-4-32k':
+      case 'gpt-4-turbo-preview':
       case 'gpt-3.5-turbo':
-        console.log(`Interface engine: ${this.engine}`);
+        this.log(`Interface engine: ${this.engine}`);
         return INTERFACE.CHAT;
-      case 'text-davinci-003':
-      case 'text-curie-001':
-      case 'text-babbage-001':
-      case 'text-ada-001':
+      case 'gpt-3.5-turbo-instruct':
       default:
-        console.log(`Completion engine: ${this.engine}`);
+        this.log(`Completion engine: ${this.engine}`);
         return INTERFACE.COMPLETION;
     }
   }

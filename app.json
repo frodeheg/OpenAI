@@ -296,19 +296,31 @@
               {
                 "id": "256",
                 "label": {
-                  "en": "256x256"
+                  "en": "256x256 (DALL-E-2)"
                 }
               },
               {
                 "id": "512",
                 "label": {
-                  "en": "512x512"
+                  "en": "512x512 (DALL-E-2)"
                 }
               },
               {
                 "id": "1024",
                 "label": {
                   "en": "1024x1024"
+                }
+              },
+              {
+                "id": "1024x1792",
+                "label": {
+                  "en": "1024x1792 (DALL-E-3)"
+                }
+              },
+              {
+                "id": "1792x1024",
+                "label": {
+                  "en": "1792x1024 (DALL-E-3)"
                 }
               }
             ]
@@ -500,7 +512,7 @@
               "hint": {
                 "en": "The maximum number of output tokens allowed for the generated answer. By default, the number of tokens the model can return will be 4096"
               },
-              "value": 4096,
+              "value": 2000,
               "min": 20,
               "max": 4096
             },

@@ -165,16 +165,34 @@
         <!-- See https://platform.openai.com/docs/models/model-endpoint-compatibility for engines -->
         <select class="homey-form-select" id="engine">
           <!-- The ones below are for createChatCompletion -->
-          <option value="gpt-4">GPT-4</option>
-          <option value="gpt-4-32k">GPT-4-32k</option>
+          <option value="gpt-4">GPT-4 (Restricted access)</option>
+          <option value="gpt-4-32k">GPT-4-32k (Restricted access)</option>
+          <option value="gpt-4-turbo-preview">GPT-4-turbo-preview (Restricted access)</option>
           <option value="gpt-3.5-turbo" selected>GPT-3.5-turbo</option>
           <!-- The ones below are for createCompletion -->
-          <option value="text-davinci-003">Davinci</option>
-          <option value="text-curie-001">Curie</option>
-          <option value="text-babbage-001">Babbage</option>
-          <option value="text-ada-001">Ada</option>
+          <option value="gpt-3.5-turbo-instruct">GPT-3.5-turbo-instruct</option>
         </select>
         <p class="hint" id="engineHint" data-i18n="settings.engineHelp" class="homey-form-label">settings.engineHelp</p>
+      </div>
+
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="imageEngine"><span data-i18n="settings.imageEngine">imageEngine</span> <div class="hintButton" onclick="toggle(this,'imageEngineHint');return false;">i</div></label>
+        <!-- See https://platform.openai.com/docs/models/dall-e for engines -->
+        <select class="homey-form-select" id="imageEngine">
+          <option value="dall-e-3">Dall-e-3</option>
+          <option value="dall-e-2" selected>Dall-e-2</option>
+        </select>
+        <p class="hint" id="imageEngineHint" data-i18n="settings.engineHelp" class="homey-form-label">settings.engineHelp</p>
+      </div>
+
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="imageQuality"><span data-i18n="settings.imageQuality">quality</span> <div class="hintButton" onclick="toggle(this,'imageQualityHint');return false;">i</div></label>
+        <!-- See https://platform.openai.com/docs/models/dall-e for engines -->
+        <select class="homey-form-select" id="imageQuality">
+          <option value="standard" selected>Standard</option>
+          <option value="hd">Hd (only for dall-e-3)</option>
+        </select>
+        <p class="hint" id="imageQualityHint" data-i18n="settings.imageQualityHelp" class="homey-form-label">settings.imageQualityHelp</p>
       </div>
 
       <div class="homey-form-group">
@@ -328,6 +346,8 @@
 
         var APIKeyElement = document.getElementById("APIKey");
         var engineElement = document.getElementById("engine");
+        var imageEngineElement = document.getElementById("imageEngine");
+        var imageQualityElement = document.getElementById("imageQuality");
         var maxWaitElement = document.getElementById("maxWait");
         var maxLengthElement = document.getElementById("maxLength");
         var temperatureElement = document.getElementById("temperature");
@@ -345,6 +365,16 @@
         Homey.get("engine", function (err, engine) {
           if (err) return Homey.alert(err);
           engineElement.value = engine;
+        });
+
+        Homey.get("imageEngine", function (err, imageEngine) {
+          if (err) return Homey.alert(err);
+          imageEngineElement.value = imageEngine;
+        });
+
+        Homey.get("imageQuality", function (err, imageQuality) {
+          if (err) return Homey.alert(err);
+          imageQualityElement.value = imageQuality;
         });
 
         Homey.get("maxWait", function (err, maxWait) {
@@ -382,6 +412,12 @@
             if (err) return Homey.alert(err);
           });
           Homey.set("engine", engineElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          Homey.set("imageEngine", imageEngineElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          Homey.set("imageQuality", imageQualityElement.value, function (err) {
             if (err) return Homey.alert(err);
           });
           Homey.set("maxWait", maxWaitElement.value, function (err) {
