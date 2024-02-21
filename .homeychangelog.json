@@ -79,5 +79,8 @@
   },
   "1.6.1": {
     "en": "Fixed the webhook"
+  },
+  "1.6.2": {
+    "en": "Removed the deprecation of the completionbot because the previous changes made it work again."
   }
 }
