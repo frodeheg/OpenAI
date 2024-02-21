@@ -584,7 +584,6 @@
       "name": {
         "en": "CompletionBot"
       },
-      "deprecated": true,
       "class": "other",
       "capabilities": [],
       "platforms": [
