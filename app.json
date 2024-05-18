@@ -484,9 +484,21 @@
               "value": "gpt-3.5-turbo",
               "values": [
                 {
+                  "id": "gpt-4o",
+                  "label": {
+                    "en": "gpt-4o"
+                  }
+                },
+                {
                   "id": "gpt-4",
                   "label": {
                     "en": "gpt-4"
+                  }
+                },
+                {
+                  "id": "gpt-4-turbo",
+                  "label": {
+                    "en": "gpt-4-turbo"
                   }
                 },
                 {
