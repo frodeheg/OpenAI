@@ -274,7 +274,9 @@ class OpenAIApp extends Homey.App {
   checkInterface() {
     switch (this.engine) {
       case 'gpt-4':
+      case 'gpt-4o':
       case 'gpt-4-32k':
+      case 'gpt-4-turbo':
       case 'gpt-4-turbo-preview':
       case 'gpt-3.5-turbo':
         this.log(`Interface engine: ${this.engine}`);
@@ -334,7 +336,7 @@ class OpenAIApp extends Homey.App {
             prompt: this.__input,
             temperature: +this.temperature,
             user: this.randomName,
-            max_tokens: 40,
+            max_tokens: 200,
           });
           responseText = completion.choices[0].text;
         } else { // this.interface === INTERFACE.CHAT
@@ -343,7 +345,7 @@ class OpenAIApp extends Homey.App {
             messages: this.chat,
             temperature: +this.temperature,
             user: this.randomName,
-            max_tokens: 40,
+            max_tokens: 200,
           });
           const answer = completion.choices[0].message;
           this.chat.push(answer);
