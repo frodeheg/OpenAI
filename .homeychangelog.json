@@ -85,5 +85,8 @@
   },
   "1.6.3": {
     "en": "Added GPT-4o and GPT-4-turbo support + increased max_token length for main queries."
+  },
+  "1.6.4": {
+    "en": "Added GPT-4o-mini."
   }
 }
