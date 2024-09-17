@@ -20,6 +20,12 @@
             }
           },
           {
+            "id": "gpt-4o-mini",
+            "label": {
+              "en": "gpt-4o-mini"
+            }
+          },
+          {
             "id": "gpt-4",
             "label": {
               "en": "gpt-4"

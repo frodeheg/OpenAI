@@ -275,6 +275,7 @@ class OpenAIApp extends Homey.App {
     switch (this.engine) {
       case 'gpt-4':
       case 'gpt-4o':
+      case 'gpt-4o-mini':
       case 'gpt-4-32k':
       case 'gpt-4-turbo':
       case 'gpt-4-turbo-preview':
