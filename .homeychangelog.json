@@ -88,5 +88,8 @@
   },
   "1.6.4": {
     "en": "Added GPT-4o-mini."
+  },
+  "1.6.5": {
+    "en": "Added gpt-4o-mini support (Thanks to Pim Louwers)"
   }
 }
